@@ -1,0 +1,666 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Sumin Ma</title>
+    <link rel="icon" type="image/png" href="assets/favicon.png" />
+    <link rel="icon" href="assets/favicon.ico" sizes="32x32" />
+    <link rel="apple-touch-icon" href="assets/apple-touch-icon.png" />
+    <meta
+      name="description"
+      content="Sumin Ma — multimodal AI, GUI agents, visual grounding, and agentic AI."
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600;700&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600;8..60,700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/@mdi/font@7.4.47/css/materialdesignicons.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0"
+    />
+    <link rel="stylesheet" href="styles.css" />
+    <script>
+      (function () {
+        var saved = localStorage.getItem("theme");
+        var theme =
+          saved ||
+          (window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
+        document.documentElement.setAttribute("data-theme", theme);
+      })();
+    </script>
+  </head>
+  <body>
+    <button type="button" class="theme-toggle" aria-label="Switch to dark mode">
+      <span class="material-symbols-outlined theme-icon-dark" aria-hidden="true">dark_mode</span>
+      <span class="material-symbols-outlined theme-icon-light" aria-hidden="true">light_mode</span>
+    </button>
+    <div class="page">
+      <header class="site-header">
+        <a class="name" href="#top">Sumin Ma</a>
+        <nav>
+          <a href="#top" class="is-current" aria-current="true"><span class="material-symbols-outlined" aria-hidden="true">planet</span>Home</a>
+          <a href="#research"><span class="material-symbols-outlined" aria-hidden="true">eco</span>Research</a>
+          <a href="#systems"><span class="material-symbols-outlined" aria-hidden="true">automation</span>Systems</a>
+          <a href="#experience"><span class="material-symbols-outlined" aria-hidden="true">work</span>Experience</a>
+          <a href="#education"><span class="material-symbols-outlined" aria-hidden="true">school</span>Education</a>
+        </nav>
+      </header>
+
+      <main id="top">
+        <section class="about is-current">
+          <div class="about-side">
+            <div class="portrait-wrap">
+              <img class="portrait" src="assets/pp7.png" alt="Portrait of Sumin Ma" />
+            </div>
+            <div class="icons">
+              <a href="https://github.com/sumin-ma-1" title="GitHub" aria-label="GitHub" target="_blank" rel="noreferrer">
+                <span class="mdi mdi-github" aria-hidden="true"></span>
+              </a>
+              <a href="https://www.linkedin.com/in/suminmas" title="LinkedIn" aria-label="LinkedIn" target="_blank" rel="noreferrer">
+                <span class="mdi mdi-linkedin" aria-hidden="true"></span>
+              </a>
+              <a href="mailto:suminma1209@gmail.com" title="Email" aria-label="Email">
+                <span class="mdi mdi-email-outline" aria-hidden="true"></span>
+              </a>
+              <button type="button" class="heart-btn" title="A bit more about me" aria-label="A bit more about me" aria-expanded="false" aria-controls="more">
+                <span class="material-symbols-outlined" aria-hidden="true">person_celebrate</span>
+              </button>
+            </div>
+          </div>
+          <div class="about-copy">
+            <p>
+              Hello! Thank you for visiting my website.
+            </p>
+            <p>
+              My name is Sumin, and I am currently a researcher at
+              <a href="https://www.keti.re.kr/" target="_blank" rel="noreferrer">Korea Electronics Technology Institute (KETI)</a>,
+              where I develop agent systems for workflow automation, agent orchestration, and tool use. I also conduct research with
+              <a href="https://www.sim-research.org/" target="_blank" rel="noreferrer">AMS Lab</a>
+              at Sookmyung Women’s University on UI detection and GUI grounding.
+            </p>
+            <p>
+              My research focuses on efficient GUI grounding: identifying the intended on-screen target from ambiguous user instructions. I investigate structured candidate representations, lightweight embedding models, and query-conditioned information selection, including when accessibility metadata is limited or unavailable.
+            </p>
+            <p>
+              My broader research interest is in building reliable and efficient intelligent systems that can perceive, ground, and act in interactive environments.
+            </p>
+          </div>
+        </section>
+
+        <section id="research">
+          <h2><span class="material-symbols-outlined" aria-hidden="true">eco</span>Selected Research</h2>
+          <article class="pub">
+            <div class="pub-media" aria-hidden="true">Coming soon</div>
+            <div>
+              <h3>Lightweight GUI Grounding</h3>
+              <p class="status">Ongoing research</p>
+              <ul class="pub-points">
+                <li>Explore training-free grounding through reusable candidate representations and embedding-based matching, including when accessibility metadata is unavailable.</li>
+                <li>Investigate query-conditioned filtering and routing to determine when lightweight methods suffice and when additional visual reasoning is needed.</li>
+              </ul>
+            </div>
+          </article>
+          <article class="pub">
+            <img
+              src="assets/gui-grounding-transparent.png"
+              alt="Research overview for Grounding Human GUI Referring Expressions"
+            />
+            <div>
+              <h3>Grounding Human GUI Referring Expressions</h3>
+              <p class="status">Under review</p>
+              <ul class="pub-points">
+                <li>Study how people describe GUI targets using names, appearance, position, and surrounding context.</li>
+                <li>Develop and evaluate a training-free ranker using separate candidate views to examine how information organization affects grounding accuracy.</li>
+              </ul>
+            </div>
+          </article>
+          <article class="pub">
+            <img
+              src="assets/gui-detection.png"
+              alt="Synthetic UI examples and icon detection results"
+            />
+            <div>
+              <h3>A Resource-Efficient UI Icon Understanding Pipeline for Actionable Interaction via Synthetic Data</h3>
+              <p class="authors">Euenseo Kim, <strong>Sumin Ma</strong>, Yumin Lee, Seongbeen Lee, Joo Yong Sim</p>
+              <p class="status">Published · Conference abstract</p>
+              <p class="venue">KSME IT and Intelligent Convergence Division Spring Conference · April 2026</p>
+              <p class="venue">Oral presentation</p>
+              <p class="award-badge">
+                <span class="material-symbols-outlined" aria-hidden="true">celebration</span>
+                Award
+              </p>
+              <ul class="pub-points">
+                <li>Develop a lightweight UI icon detection pipeline trained on synthetic interface data.</li>
+                <li>Evaluate transfer to real interface screenshots and the potential to reduce manual annotation requirements.</li>
+              </ul>
+              <p>
+                <a href="https://www.dbpia.co.kr/journal/articleDetail?nodeId=NODE12739094" target="_blank" rel="noreferrer">
+                  <span class="material-symbols-outlined" aria-hidden="true">link_2</span>
+                  Publication
+                </a>
+              </p>
+            </div>
+          </article>
+        </section>
+
+        <section id="systems">
+          <h2><span class="material-symbols-outlined" aria-hidden="true">automation</span>Selected Systems / Projects</h2>
+          <article class="pub">
+            <video
+              class="pub-video"
+              src="assets/operateai.mp4"
+              playsinline
+              muted
+              loop
+              autoplay
+              aria-label="OperateAI demo video"
+            ></video>
+            <div>
+              <h3>OperateAI</h3>
+              <p class="subtitle">Visual Workflow Orchestration</p>
+              <ul class="pub-points">
+                <li>Develop a visual interface for configuring and executing agent workflows with connected tools.</li>
+                <li>Make workflow structure, execution status, and intermediate outputs inspectable so users can follow the execution process.</li>
+              </ul>
+              <p>
+                <a href="https://github.com/sumin-ma-1/operate-ai" target="_blank" rel="noreferrer">
+                  <span class="material-symbols-outlined" aria-hidden="true">link_2</span>
+                  GitHub
+                </a>
+              </p>
+            </div>
+          </article>
+          <article class="pub">
+            <video
+              class="pub-video"
+              src="assets/worklog.mp4"
+              playsinline
+              muted
+              loop
+              autoplay
+              aria-label="Worklog demo video"
+            ></video>
+            <div>
+              <h3>Worklog</h3>
+              <p class="subtitle">From Conversations to Daily Work Records</p>
+              <ul class="pub-points">
+                <li>Develop a local-first agent that converts workplace conversations and shared files into dated work records using a local language model.</li>
+                <li>Support natural-language Telegram requests with intent-aware workflow execution.</li>
+              </ul>
+              <p>
+                <a href="https://github.com/sumin-ma-1/worklog-local-agent" target="_blank" rel="noreferrer">
+                  <span class="material-symbols-outlined" aria-hidden="true">link_2</span>
+                  GitHub
+                </a>
+              </p>
+            </div>
+          </article>
+          <article class="pub">
+            <video
+              class="pub-video"
+              src="assets/myown3.mp4"
+              playsinline
+              muted
+              loop
+              autoplayㅑ
+              aria-label="MyOwn demo video"
+            ></video>
+            <div>
+              <h3>MyOwn</h3>
+              <p class="subtitle">Conversational Task and Reminder Assistant</p>
+              <ul class="pub-points">
+                <li>Create tasks and reminders, add scheduled events, and answer schedule queries through natural-language Telegram messages.</li>
+                <li>Resolve missing information through lightweight multi-turn clarification.</li>
+              </ul>
+              <p>
+                <a href="https://github.com/sumin-ma-1/myown" target="_blank" rel="noreferrer">
+                  <span class="material-symbols-outlined" aria-hidden="true">link_2</span>
+                  GitHub
+                </a>
+              </p>
+            </div>
+          </article>
+        </section>
+
+        <section id="experience">
+          <h2><span class="material-symbols-outlined" aria-hidden="true">work</span>Experience</h2>
+          <div class="entry">
+            <p class="when">Apr 2026 – Present</p>
+            <div>
+              <div class="entry-top">
+                <h3>Researcher, Korea Electronics Technology Institute (KETI)</h3>
+                <p class="place">Seongnam, South Korea</p>
+              </div>
+              <p>
+                Develop agentic AI systems for workflow automation, with an emphasis on workflow visualization, agent orchestration, and tool use.
+              </p>
+            </div>
+          </div>
+          <div class="entry">
+            <p class="when">Aug 2025 – Mar 2026</p>
+            <div>
+              <div class="entry-top">
+                <h3>Undergraduate Student Researcher, AMS Lab, Sookmyung Women’s University</h3>
+                <p class="place">Seoul, South Korea</p>
+              </div>
+              <p>
+                Conduct research on UI detection and GUI grounding for computer-use agents, including candidate representations and reference ambiguity.
+              </p>
+            </div>
+          </div>
+          <div class="entry">
+            <p class="when">Jun 2023 – Jun 2024</p>
+            <div>
+              <div class="entry-top">
+                <h3>Information Technology Intern, Hyundai Digitech</h3>
+                <p class="place">Richardson, TX, USA</p>
+              </div>
+              <p>
+                Developed web-based systems for safety inspections, employee KPI management, and inventory and asset management.
+              </p>
+            </div>
+          </div>
+        </section>
+
+        <section id="education">
+          <h2><span class="material-symbols-outlined" aria-hidden="true">school</span>Education</h2>
+          <div class="entry">
+            <p class="when">Mar 2022 – Feb 2026</p>
+            <div>
+              <div class="entry-top">
+                <h3>B.E. in IT Engineering, Sookmyung Women’s University</h3>
+                <p class="place">Seoul, South Korea</p>
+              </div>
+              <p>GPA: 4.1 / 4.5</p>
+            </div>
+          </div>
+          <div class="entry">
+            <p class="when">Fall 2024</p>
+            <div>
+              <div class="entry-top">
+                <h3>Exchange Student, Computer Science, Albright College</h3>
+                <p class="place">Reading, PA, USA</p>
+              </div>
+              <p>GPA: 4.0 / 4.0</p>
+            </div>
+          </div>
+        </section>
+
+        <section id="more" hidden>
+          <h2 class="more-title"><span class="material-symbols-outlined" aria-hidden="true">person_celebrate</span>A bit more about me</h2>
+          <div class="more-body">
+            <div class="more-block">
+              <p>I enjoy drawing! It helps me relax and clear my mind.</p>
+              <div class="drawings crop">
+                <video src="draw2.mp4" playsinline muted loop></video>
+                <img src="draw1.png" alt="Pencil drawing of a tiger" />
+              </div>
+            </div>
+
+            <div class="more-block">
+              <p>I like little messages I come across in everyday life.</p>
+              <div class="drawings crop">
+                <img src="assets/notes1.jpg" alt="Dove chocolate wrapper note" />
+                <img src="assets/notes2.jpg" alt="Handwritten note on a bookshelf" />
+              </div>
+            </div>
+
+            <div class="more-block">
+              <p>I love kongdduck (콩떡), my sister's puppy. He is adorable.</p>
+              <div class="drawings crop">
+                <video src="kong2.mp4" playsinline muted loop></video>
+                <video src="kong3.mp4" playsinline muted loop></video>
+              </div>
+            </div>
+          </div>
+          <div class="more-dots" aria-hidden="true">
+            <span class="on"></span>
+            <span></span>
+            <span></span>
+          </div>
+        </section>
+
+        <footer class="site-footer" id="contact">
+          <a href="mailto:suminma1209@gmail.com">suminma1209@gmail.com</a>
+        </footer>
+      </main>
+    </div>
+
+    <div class="space-fx" aria-hidden="true">
+      <span class="milky-way"></span>
+      <span class="star s1"></span>
+      <span class="star s2"></span>
+      <span class="star s3"></span>
+      <span class="star s4"></span>
+      <span class="star s5"></span>
+      <span class="star s6"></span>
+      <span class="star s7"></span>
+      <span class="star s8"></span>
+      <span class="star s9"></span>
+      <span class="star s10"></span>
+      <span class="star s11"></span>
+      <span class="star s12"></span>
+      <span class="star s13"></span>
+      <span class="star s14"></span>
+      <span class="star s15"></span>
+      <span class="star s16"></span>
+      <span class="star s17"></span>
+      <span class="star s18"></span>
+    </div>
+    <div class="page-night" aria-hidden="true">
+      <span class="star pn1 bright"></span>
+      <span class="star pn2"></span>
+      <span class="star pn3"></span>
+      <span class="star pn4"></span>
+      <span class="star pn5 bright"></span>
+      <span class="star pn6"></span>
+      <span class="star pn7"></span>
+      <span class="star pn8 bright"></span>
+      <span class="star pn9"></span>
+      <span class="star pn10"></span>
+      <span class="star pn11"></span>
+      <span class="star pn12"></span>
+      <span class="star pn13 bright"></span>
+      <span class="star pn14"></span>
+      <span class="star pn15"></span>
+      <span class="star pn16"></span>
+      <span class="star pn17 bright"></span>
+      <span class="star pn18"></span>
+    </div>
+
+    <dialog id="media-view">
+      <div class="media-frame">
+        <button type="button" class="more-close" aria-label="Close">
+          <span class="material-symbols-outlined" aria-hidden="true">close</span>
+        </button>
+        <img alt="" hidden />
+        <video playsinline hidden></video>
+      </div>
+    </dialog>
+
+    <script>
+      const more = document.getElementById("more");
+      const heart = document.querySelector(".heart-btn");
+      const heartIcon = heart.querySelector(".material-symbols-outlined");
+      const clips = more.querySelectorAll("video");
+
+      document.querySelectorAll(".pub-video").forEach((video) => {
+        video.playbackRate = 3;
+        video.addEventListener("loadeddata", () => {
+          video.playbackRate = 3;
+        });
+        video.addEventListener("play", () => {
+          video.playbackRate = 3;
+        });
+      });
+
+      function limitClip(clip) {
+        const end = Number(clip.dataset.end);
+        if (!end) return;
+        clip.addEventListener("timeupdate", () => {
+          if (clip.currentTime >= end) {
+            clip.currentTime = 0;
+            if (!clip.paused) clip.play().catch(() => {});
+          }
+        });
+      }
+
+      clips.forEach(limitClip);
+
+      function setHeartOpen(on) {
+        heart.setAttribute("aria-expanded", on ? "true" : "false");
+        heartIcon.style.fontVariationSettings = on
+          ? '"FILL" 1, "wght" 400, "GRAD" 0, "opsz" 24'
+          : '"FILL" 0, "wght" 400, "GRAD" 0, "opsz" 24';
+      }
+
+      const moreBody = more.querySelector(".more-body");
+      const moreBlocks = [...more.querySelectorAll(".more-block")];
+      const moreDots = more.querySelectorAll(".more-dots span");
+
+      function moreIndex() {
+        const w = moreBody.clientWidth || 1;
+        return Math.min(moreBlocks.length - 1, Math.max(0, Math.round(moreBody.scrollLeft / w)));
+      }
+
+      function syncMoreSlide() {
+        const idx = moreIndex();
+        moreDots.forEach((dot, i) => dot.classList.toggle("on", i === idx));
+        moreBlocks.forEach((block, i) => {
+          block.querySelectorAll("video").forEach((clip) => {
+            if (i === idx) clip.play().catch(() => {});
+            else clip.pause();
+          });
+        });
+      }
+
+      function goMore(idx) {
+        const next = Math.min(moreBlocks.length - 1, Math.max(0, idx));
+        moreBody.scrollTo({ left: next * moreBody.clientWidth, behavior: "smooth" });
+      }
+
+      moreBody.addEventListener("scroll", syncMoreSlide, { passive: true });
+      moreDots.forEach((dot, i) => {
+        dot.addEventListener("click", () => goMore(i));
+      });
+
+      let moreWheelLock = false;
+      moreBody.addEventListener("wheel", (event) => {
+        if (Math.abs(event.deltaX) > Math.abs(event.deltaY)) return;
+        event.preventDefault();
+        if (moreWheelLock) return;
+        moreWheelLock = true;
+        goMore(moreIndex() + (event.deltaY > 0 ? 1 : -1));
+        window.setTimeout(() => {
+          moreWheelLock = false;
+        }, 420);
+      }, { passive: false });
+
+      document.addEventListener("keydown", (event) => {
+        if (more.hidden) return;
+        if (event.key === "ArrowRight") goMore(moreIndex() + 1);
+        if (event.key === "ArrowLeft") goMore(moreIndex() - 1);
+      });
+
+      function playMore() {
+        moreBody.scrollLeft = 0;
+        moreBlocks.forEach((block, i) => {
+          block.querySelectorAll("video").forEach((clip) => {
+            clip.currentTime = 0;
+            if (i === 0) clip.play().catch(() => {});
+            else clip.pause();
+          });
+        });
+        requestAnimationFrame(syncMoreSlide);
+      }
+
+      function pauseMore() {
+        clips.forEach((clip) => clip.pause());
+      }
+
+      const viewer = document.getElementById("media-view");
+      const viewerImg = viewer.querySelector("img");
+      const viewerVid = viewer.querySelector("video");
+      const mediaFrame = viewer.querySelector(".media-frame");
+
+      function openViewer(el) {
+        viewerImg.removeAttribute("src");
+        viewerVid.pause();
+        viewerVid.removeAttribute("src");
+        viewerVid.removeAttribute("controls");
+        viewerVid.load();
+        const src = el.currentSrc || el.src || "";
+        mediaFrame.classList.toggle("is-compact", src.includes("draw1.png"));
+        mediaFrame.classList.toggle(
+          "has-paper",
+          el.tagName === "IMG" && Boolean(el.closest("#research"))
+        );
+        if (el.tagName === "IMG") {
+          viewerVid.hidden = true;
+          viewerImg.hidden = false;
+          viewerImg.src = src;
+          viewerImg.alt = el.alt || "";
+        } else {
+          viewerImg.hidden = true;
+          viewerVid.hidden = false;
+          viewerVid.controls = true;
+          viewerVid.src = src;
+          viewerVid.playbackRate = el.classList.contains("pub-video") ? 3 : 1;
+          viewerVid.muted = el.muted;
+          viewerVid.loop = el.loop;
+          viewerVid.currentTime = 0;
+          viewerVid.play().catch(() => {});
+        }
+        viewer.showModal();
+      }
+
+      document
+        .querySelectorAll(".drawings img, .drawings video, .pub > img, .pub > video")
+        .forEach((el) => {
+          el.addEventListener("click", (event) => {
+            event.stopPropagation();
+            openViewer(el);
+          });
+        });
+
+      viewer.querySelector(".more-close").addEventListener("click", () => viewer.close());
+      viewer.addEventListener("click", (event) => {
+        if (event.target === viewer) viewer.close();
+      });
+      viewer.addEventListener("close", () => {
+        viewerVid.pause();
+        viewerVid.removeAttribute("src");
+        viewerImg.removeAttribute("src");
+      });
+
+      const night = document.querySelector(".page-night");
+      function updateNight() {
+        const max = document.documentElement.scrollHeight - window.innerHeight;
+        const p = max <= 0 ? 0 : Math.min(1, Math.max(0, window.scrollY / max));
+        const t = p * p * (3 - 2 * p);
+        night.style.setProperty("--night-depth", t.toFixed(4));
+      }
+
+      const navSections = [...document.querySelectorAll("nav a")].map((link) => {
+        const href = link.getAttribute("href");
+        const key = href === "#top" ? "top" : href.slice(1);
+        const target =
+          href === "#top" ? document.querySelector(".about") : document.querySelector(href);
+        return { link, target, key };
+      }).filter((item) => item.target);
+
+      let activeKey = "top";
+
+      function setCurrent(current) {
+        navSections.forEach((item) => {
+          const on = item === current;
+          item.link.classList.toggle("is-current", on);
+          item.target.classList.toggle("is-current", on);
+          if (on) item.link.setAttribute("aria-current", "true");
+          else item.link.removeAttribute("aria-current");
+        });
+      }
+
+      function updateActiveNav() {
+        if (activeKey !== "top") return;
+        const mid = window.innerHeight / 2;
+        let current = navSections[0];
+        let closest = Infinity;
+        navSections.forEach((item) => {
+          const box = item.target.getBoundingClientRect();
+          const dist = Math.abs((box.top + box.bottom) / 2 - mid);
+          if (dist < closest) {
+            closest = dist;
+            current = item;
+          }
+        });
+        setCurrent(current);
+      }
+
+      function showPanel(key) {
+        activeKey = key;
+        const all = key === "top";
+        const isMore = key === "more";
+        navSections.forEach((item) => {
+          item.target.hidden = isMore ? true : all ? false : item.key !== key;
+        });
+        more.hidden = !isMore;
+        more.classList.toggle("is-current", isMore);
+        setHeartOpen(isMore);
+        if (isMore) {
+          navSections.forEach((item) => {
+            item.link.classList.remove("is-current");
+            item.target.classList.remove("is-current");
+            item.link.removeAttribute("aria-current");
+          });
+          playMore();
+        } else {
+          pauseMore();
+          if (all) updateActiveNav();
+          else setCurrent(navSections.find((item) => item.key === key) || navSections[0]);
+        }
+        window.scrollTo(0, 0);
+        updateNight();
+      }
+
+      function panelFromHash() {
+        const key = (location.hash || "#top").slice(1);
+        if (key === "more") return "more";
+        return navSections.some((item) => item.key === key) ? key : "top";
+      }
+
+      document.querySelectorAll("nav a, a.name").forEach((link) => {
+        link.addEventListener("click", (event) => {
+          const href = link.getAttribute("href");
+          if (!href || href.charAt(0) !== "#") return;
+          event.preventDefault();
+          let key = href === "#top" ? "top" : href.slice(1);
+          if (key !== "top" && key === activeKey) key = "top";
+          const nextHash = key === "top" ? "#top" : "#" + key;
+          if (location.hash !== nextHash) history.pushState(null, "", nextHash);
+          showPanel(key);
+        });
+      });
+      heart.addEventListener("click", () => {
+        const next = activeKey === "more" ? "top" : "more";
+        const nextHash = next === "top" ? "#top" : "#more";
+        if (location.hash !== nextHash) history.pushState(null, "", nextHash);
+        showPanel(next);
+      });
+      window.addEventListener("popstate", () => showPanel(panelFromHash()));
+      window.addEventListener("scroll", () => {
+        updateNight();
+        updateActiveNav();
+      }, { passive: true });
+      window.addEventListener("resize", () => {
+        updateNight();
+        updateActiveNav();
+      });
+      showPanel(panelFromHash());
+
+      const themeToggle = document.querySelector(".theme-toggle");
+      function currentTheme() {
+        return document.documentElement.getAttribute("data-theme") === "dark" ? "dark" : "light";
+      }
+      function applyTheme(theme) {
+        document.documentElement.setAttribute("data-theme", theme);
+        localStorage.setItem("theme", theme);
+        themeToggle.setAttribute(
+          "aria-label",
+          theme === "dark" ? "Switch to light mode" : "Switch to dark mode"
+        );
+      }
+      applyTheme(currentTheme());
+      themeToggle.addEventListener("click", () => {
+        applyTheme(currentTheme() === "dark" ? "light" : "dark");
+      });
+    </script>
+  </body>
+</html>
