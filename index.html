@@ -157,9 +157,11 @@
               class="pub-video"
               src="assets/operateai.mp4"
               playsinline
+              webkit-playsinline
               muted
               loop
               autoplay
+              preload="auto"
               aria-label="OperateAI demo video"
             ></video>
             <div>
@@ -182,9 +184,11 @@
               class="pub-video"
               src="assets/worklog.mp4"
               playsinline
+              webkit-playsinline
               muted
               loop
               autoplay
+              preload="auto"
               aria-label="Worklog demo video"
             ></video>
             <div>
@@ -207,9 +211,11 @@
               class="pub-video"
               src="assets/myown3.mp4"
               playsinline
+              webkit-playsinline
               muted
               loop
-              autoplayㅑ
+              autoplay
+              preload="auto"
               aria-label="MyOwn demo video"
             ></video>
             <div>
@@ -392,13 +398,27 @@
       const clips = more.querySelectorAll("video");
 
       document.querySelectorAll(".pub-video").forEach((video) => {
-        video.playbackRate = 3;
-        video.addEventListener("loadeddata", () => {
-          video.playbackRate = 3;
+        const isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
+        const rate = isSafari ? 2 : 3;
+        const kick = () => {
+          video.muted = true;
+          video.defaultMuted = true;
+          video.setAttribute("playsinline", "");
+          video.playsInline = true;
+          try {
+            video.playbackRate = rate;
+          } catch (_) {}
+          const playPromise = video.play();
+          if (playPromise && playPromise.catch) playPromise.catch(() => {});
+        };
+        video.addEventListener("loadedmetadata", kick);
+        video.addEventListener("canplay", kick);
+        video.addEventListener("playing", () => {
+          try {
+            video.playbackRate = rate;
+          } catch (_) {}
         });
-        video.addEventListener("play", () => {
-          video.playbackRate = 3;
-        });
+        if (video.readyState >= 1) kick();
       });
 
       function limitClip(clip) {

@@ -775,6 +775,8 @@ section {
 .pub video {
   display: block;
   height: auto;
+  background: #111;
+  object-fit: contain;
 }
 
 .pub-media {
