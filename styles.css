@@ -8,8 +8,8 @@
   --icon-hover: #e0b400;
   --soft: #f5f5f5;
   --card: #fff;
-  --serif: "Source Serif 4", Georgia, "Times New Roman", serif;
-  --display: "Playfair Display", Georgia, serif;
+  --serif: Calibri, Carlito, "Segoe UI", sans-serif;
+  --display: Calibri, Carlito, "Segoe UI", sans-serif;
   --max: 920px;
 }
 
