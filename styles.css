@@ -765,6 +765,22 @@ section {
   background: transparent;
 }
 
+.pub-thumb-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  align-self: center;
+}
+
+.pub img.pub-thumb {
+  width: auto;
+  max-width: 140px;
+  max-height: 160px;
+  margin: 0;
+  object-fit: contain;
+}
+
 .pub video,
 .pub-media {
   width: 100%;
