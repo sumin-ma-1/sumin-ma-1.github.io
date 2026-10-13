@@ -1,15 +1,15 @@
 ﻿:root {
-  --bg: #f3f1eb;
+  --bg: #fff;
   --ink: #222;
   --muted: #555;
-  --line: #ddd8cf;
+  --line: #e6e6e6;
   --link: #2b7de1;
   --nav-hover: #1a9b8e;
   --icon-hover: #e0b400;
-  --soft: #ebe7df;
-  --card: #faf8f3;
-  --serif: Calibri, Carlito, "Segoe UI", sans-serif;
-  --display: Calibri, Carlito, "Segoe UI", sans-serif;
+  --soft: #f5f5f5;
+  --card: #fff;
+  --serif: Calibri, Pretendard, "Segoe UI", sans-serif;
+  --display: Calibri, Pretendard, "Segoe UI", sans-serif;
   --max: 920px;
 }
 
@@ -26,26 +26,9 @@ html[data-theme="dark"] {
 html {
   min-height: 100%;
   overflow-x: hidden;
-  background:
-    radial-gradient(ellipse 120% 80% at 50% -10%, rgba(255, 252, 245, 0.9), transparent 55%),
-    linear-gradient(180deg, #f6f3ec 0%, #f1eee6 48%, #efebe3 100%);
-  background-attachment: fixed;
+  background: var(--bg);
   scroll-behavior: smooth;
   color-scheme: light;
-}
-
-html[data-theme="light"]::before,
-html:not([data-theme="dark"])::before {
-  content: "";
-  position: fixed;
-  inset: 0;
-  z-index: 0;
-  pointer-events: none;
-  opacity: 0.38;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='matrix' values='0 0 0 0 0.42 0 0 0 0 0.39 0 0 0 0 0.34 0 0 0 0.55 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
-  background-repeat: repeat;
-  background-size: 180px 180px;
-  mix-blend-mode: multiply;
 }
 
 html[data-theme="dark"] {
@@ -60,10 +43,6 @@ html[data-theme="dark"] {
   background-attachment: fixed;
 }
 
-html[data-theme="dark"]::before {
-  content: none;
-}
-
 * {
   box-sizing: border-box;
   margin: 0;
@@ -71,10 +50,8 @@ html[data-theme="dark"]::before {
 }
 
 body {
-  position: relative;
-  z-index: 1;
   min-height: 100vh;
-  background: transparent;
+  background: var(--bg);
   color: var(--ink);
   font-family: var(--serif);
   font-size: 17px;
@@ -293,8 +270,8 @@ html[data-theme="dark"] .site-header {
 
 .theme-toggle {
   position: fixed;
-  top: 16px;
-  right: 16px;
+  left: 18px;
+  bottom: 22px;
   z-index: 40;
   background: none;
   border: none;
@@ -308,6 +285,49 @@ html[data-theme="dark"] .site-header {
   height: 36px;
 }
 
+.back-top {
+  position: fixed;
+  right: 14px;
+  bottom: calc(22px + (36px - 68px) / 2);
+  z-index: 40;
+  width: 68px;
+  height: 68px;
+  border: none;
+  border-radius: 0;
+  padding: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  box-shadow: none;
+  cursor: pointer;
+  opacity: 0;
+  transform: translateY(8px);
+  pointer-events: none;
+  transition: opacity 0.22s ease, transform 0.22s ease;
+}
+
+.back-top.is-visible {
+  opacity: 0.9;
+  transform: translateY(0);
+  pointer-events: auto;
+}
+
+.back-top:hover {
+  opacity: 1;
+}
+
+.back-top-arrow {
+  width: 56px;
+  height: auto;
+  display: block;
+  pointer-events: none;
+}
+
+html[data-theme="dark"] .back-top-arrow {
+  filter: invert(1);
+}
+
 .theme-toggle .material-symbols-outlined {
   font-size: 22px;
   line-height: 1;
@@ -319,11 +339,11 @@ html[data-theme="dark"] .theme-icon-dark {
 }
 
 .name {
-  font-family: var(--display);
-  font-size: 34px;
-  font-weight: 700;
-  letter-spacing: 0.04em;
-  text-transform: uppercase;
+  font-family: "Caveat", Pretendard, cursive;
+  font-size: 42px;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  line-height: 1;
   color: var(--ink);
   text-decoration: none;
 }
@@ -377,7 +397,7 @@ nav a.is-current {
 .portrait-wrap {
   width: 168px;
   height: 224px;
-  border-radius: 6px;
+  border-radius: 2px;
   overflow: hidden;
 }
 
@@ -387,7 +407,7 @@ nav a.is-current {
   height: 100%;
   object-fit: cover;
   object-position: center;
-  border-radius: 6px;
+  border-radius: 2px;
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -1007,7 +1027,7 @@ html[data-theme="dark"] .award-badge {
   }
 
   .name {
-    font-size: 28px;
+    font-size: 36px;
   }
 
   .about {
