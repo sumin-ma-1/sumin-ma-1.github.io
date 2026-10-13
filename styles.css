@@ -426,14 +426,45 @@ nav a.is-current {
   grid-template-columns: minmax(0, 1fr) 168px;
   gap: 36px;
   align-items: start;
+  align-content: start;
+  box-sizing: border-box;
+  min-height: calc(100dvh - 8.5rem);
+  padding: 12px 0 28px;
+  transition:
+    min-height 0.9s cubic-bezier(0.22, 1, 0.36, 1),
+    padding 0.9s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.about::before {
+  content: "";
+  grid-column: 1 / -1;
+  height: clamp(16px, calc((100dvh - 8.5rem - 300px) / 2 - 36px), 22vh);
+  pointer-events: none;
+  transition: height 0.9s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+main.is-section-panel .about,
+main.is-home-compact .about {
+  min-height: 0;
   padding: 28px 0 12px;
+}
+
+main.is-section-panel .about::before,
+main.is-home-compact .about::before {
+  height: 0;
 }
 
 .about-side {
   grid-column: 2;
-  grid-row: 1;
+  grid-row: 2;
   width: 168px;
-  margin-top: 28px;
+  margin-top: 48px;
+  transition: margin-top 0.9s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+main.is-section-panel .about-side,
+main.is-home-compact .about-side {
+  margin-top: 36px;
 }
 
 .portrait-wrap {
@@ -472,7 +503,7 @@ nav a.is-current {
 
 .about-copy {
   grid-column: 1;
-  grid-row: 1;
+  grid-row: 2;
 }
 
 .about-copy p + p {
@@ -800,6 +831,33 @@ section {
   padding: 8px 0 18px;
 }
 
+main > section:not(.about) {
+  opacity: 0;
+  transform: translateY(40px);
+  transition:
+    opacity 0.85s cubic-bezier(0.22, 1, 0.36, 1),
+    transform 0.85s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+main > section:not(.about).is-revealed {
+  opacity: 1;
+  transform: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .about,
+  .about::before,
+  .about-side {
+    transition: none;
+  }
+
+  main > section:not(.about) {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+}
+
 .pub {
   display: grid;
   grid-template-columns: 260px minmax(0, 1fr);
@@ -1026,7 +1084,23 @@ html[data-theme="dark"] .award-badge {
   }
 
   .about {
-    display: block;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    gap: 20px;
+    min-height: calc(100dvh - 11rem);
+  }
+
+  .about::before {
+    width: 100%;
+    flex-shrink: 0;
+    height: clamp(12px, calc((100dvh - 11rem - 340px) / 2 - 28px), 16vh);
+  }
+
+  main.is-section-panel .about,
+  main.is-home-compact .about {
+    min-height: 0;
+    justify-content: flex-start;
   }
 
   .pub,
@@ -1048,6 +1122,10 @@ html[data-theme="dark"] .award-badge {
 
   .portrait-wrap {
     height: 187px;
+  }
+
+  .about-side {
+    align-self: center;
   }
 
   nav {

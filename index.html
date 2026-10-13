@@ -634,6 +634,44 @@
         night.style.setProperty("--night-depth", t.toFixed(4));
       }
 
+      const revealSections = [...document.querySelectorAll("main > section:not(.about)")];
+      const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+      let sectionObserver = null;
+      function revealSection(section) {
+        section.classList.add("is-revealed");
+      }
+      function resetReveals() {
+        if (reduceMotion) {
+          revealSections.forEach(revealSection);
+          return;
+        }
+        revealSections.forEach((section) => section.classList.remove("is-revealed"));
+        if (sectionObserver) sectionObserver.disconnect();
+        sectionObserver = new IntersectionObserver(
+          (entries) => {
+            entries.forEach((entry) => {
+              if (entry.isIntersecting) {
+                revealSection(entry.target);
+                sectionObserver.unobserve(entry.target);
+              }
+            });
+          },
+          { rootMargin: "0px 0px 42% 0px", threshold: 0 }
+        );
+        revealSections.forEach((section) => {
+          if (section.hidden) {
+            revealSection(section);
+            return;
+          }
+          sectionObserver.observe(section);
+        });
+      }
+      function revealVisiblePanels() {
+        revealSections.forEach((section) => {
+          if (!section.hidden) revealSection(section);
+        });
+      }
+
       const navSections = [...document.querySelectorAll("nav a")].map((link) => {
         const href = link.getAttribute("href");
         const key = href === "#top" ? "top" : href.slice(1);
@@ -670,15 +708,62 @@
         setCurrent(current);
       }
 
+      const mainEl = document.querySelector("main");
+      let homeCompact = false;
+      let revealStaggerTimers = [];
+
+      function clearRevealStaggers() {
+        revealStaggerTimers.forEach((id) => window.clearTimeout(id));
+        revealStaggerTimers = [];
+      }
+
+      function setHomeCompact(on) {
+        if (homeCompact === on) return;
+        homeCompact = on;
+        mainEl.classList.toggle("is-home-compact", on);
+        clearRevealStaggers();
+        if (on) {
+          if (sectionObserver) {
+            sectionObserver.disconnect();
+            sectionObserver = null;
+          }
+          window.scrollTo(0, 0);
+          revealSections.forEach((section, i) => {
+            if (section.hidden) return;
+            section.classList.remove("is-revealed");
+            const delay = reduceMotion ? 0 : 180 + i * 110;
+            revealStaggerTimers.push(
+              window.setTimeout(() => revealSection(section), delay)
+            );
+          });
+        }
+      }
+
+      function updateHomeCompact() {
+        if (activeKey !== "top") return;
+        if (!homeCompact && window.scrollY > 20) setHomeCompact(true);
+      }
+
       function showPanel(key) {
         activeKey = key;
         const all = key === "top";
         const isMore = key === "more";
+        homeCompact = false;
+        mainEl.classList.remove("is-home-compact");
+        clearRevealStaggers();
         navSections.forEach((item) => {
-          item.target.hidden = isMore ? true : all ? false : item.key !== key;
+          if (isMore) {
+            item.target.hidden = true;
+          } else if (all) {
+            item.target.hidden = false;
+          } else {
+            // Keep Home intro visible; show only the selected section below it.
+            item.target.hidden = item.key !== "top" && item.key !== key;
+          }
         });
         more.hidden = !isMore;
         more.classList.toggle("is-current", isMore);
+        mainEl.classList.toggle("is-section-panel", !all && !isMore);
         setHeartOpen(isMore);
         if (isMore) {
           navSections.forEach((item) => {
@@ -689,8 +774,13 @@
           playMore();
         } else {
           pauseMore();
-          if (all) updateActiveNav();
-          else setCurrent(navSections.find((item) => item.key === key) || navSections[0]);
+          if (all) {
+            resetReveals();
+            updateActiveNav();
+          } else {
+            revealVisiblePanels();
+            setCurrent(navSections.find((item) => item.key === key) || navSections[0]);
+          }
         }
         window.scrollTo(0, 0);
         updateNight();
@@ -729,15 +819,24 @@
         backTop.tabIndex = show ? 0 : -1;
       }
       backTop.addEventListener("click", () => {
+        if (activeKey === "top" && homeCompact) {
+          homeCompact = false;
+          mainEl.classList.remove("is-home-compact");
+          clearRevealStaggers();
+          resetReveals();
+          updateActiveNav();
+        }
         window.scrollTo({ top: 0, behavior: "smooth" });
       });
 
       window.addEventListener("scroll", () => {
+        updateHomeCompact();
         updateNight();
         updateActiveNav();
         updateBackTop();
       }, { passive: true });
       window.addEventListener("resize", () => {
+        updateHomeCompact();
         updateNight();
         updateActiveNav();
         updateBackTop();
