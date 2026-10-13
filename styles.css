@@ -4,8 +4,8 @@
   --muted: #555;
   --line: #e6e6e6;
   --link: #2b7de1;
-  --nav-hover: #d4894a;
-  --icon-hover: #e0b400;
+  --nav-hover: #5a9a62;
+  --icon-hover: #6aad5a;
   --soft: #f5f5f5;
   --card: #fff;
   --serif: Calibri, Carlito, Pretendard, "Segoe UI", sans-serif;
@@ -369,12 +369,12 @@ html[data-theme="dark"] .social-icon {
 
 nav a:hover .nav-icon,
 nav a.is-current .nav-icon {
-  filter: invert(62%) sepia(38%) saturate(650%) hue-rotate(346deg) brightness(95%) contrast(92%);
+  filter: invert(52%) sepia(22%) saturate(750%) hue-rotate(85deg) brightness(95%) contrast(90%);
 }
 
 html[data-theme="dark"] nav a:hover .nav-icon,
 html[data-theme="dark"] nav a.is-current .nav-icon {
-  filter: invert(62%) sepia(38%) saturate(650%) hue-rotate(346deg) brightness(95%) contrast(92%);
+  filter: invert(52%) sepia(22%) saturate(750%) hue-rotate(85deg) brightness(95%) contrast(90%);
 }
 
 section.is-current > h2 {
@@ -516,13 +516,13 @@ nav a.is-current {
 .icons a:hover .social-icon,
 .heart-btn:hover .social-icon,
 .heart-btn[aria-expanded="true"] .social-icon {
-  filter: invert(72%) sepia(79%) saturate(1200%) hue-rotate(8deg) brightness(98%) contrast(95%);
+  filter: invert(58%) sepia(35%) saturate(700%) hue-rotate(70deg) brightness(95%) contrast(90%);
 }
 
 html[data-theme="dark"] .icons a:hover .social-icon,
 html[data-theme="dark"] .heart-btn:hover .social-icon,
 html[data-theme="dark"] .heart-btn[aria-expanded="true"] .social-icon {
-  filter: invert(72%) sepia(79%) saturate(1200%) hue-rotate(8deg) brightness(98%) contrast(95%);
+  filter: invert(58%) sepia(35%) saturate(700%) hue-rotate(70deg) brightness(95%) contrast(90%);
 }
 
 .space-fx {
@@ -782,7 +782,7 @@ h2::before {
   top: 8px;
   height: 1.5px;
   pointer-events: none;
-  background-color: color-mix(in srgb, #d4a07a 42%, transparent);
+  background-color: color-mix(in srgb, #5a9a62 42%, transparent);
   -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='2'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='1.8' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0.7 0'/%3E%3C/filter%3E%3Crect width='120' height='2' filter='url(%23n)'/%3E%3C/svg%3E");
   mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='2'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='1.8' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0.7 0'/%3E%3C/filter%3E%3Crect width='120' height='2' filter='url(%23n)'/%3E%3C/svg%3E");
   -webkit-mask-size: 120px 2px;
@@ -793,7 +793,7 @@ h2::before {
 
 html[data-theme="dark"] h2::before {
   height: 1.5px;
-  background-color: color-mix(in srgb, #e8b892 58%, transparent);
+  background-color: color-mix(in srgb, #7bb87f 58%, transparent);
 }
 
 section {
