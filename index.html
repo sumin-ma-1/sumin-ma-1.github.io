@@ -753,7 +753,8 @@
         clearRevealStaggers();
         navSections.forEach((item) => {
           if (isMore) {
-            item.target.hidden = true;
+            // Keep Home intro; hide other nav sections under more.
+            item.target.hidden = item.key !== "top";
           } else if (all) {
             item.target.hidden = false;
           } else {
@@ -763,7 +764,7 @@
         });
         more.hidden = !isMore;
         more.classList.toggle("is-current", isMore);
-        mainEl.classList.toggle("is-section-panel", !all && !isMore);
+        mainEl.classList.toggle("is-section-panel", !all);
         setHeartOpen(isMore);
         if (isMore) {
           navSections.forEach((item) => {
@@ -771,6 +772,10 @@
             item.target.classList.remove("is-current");
             item.link.removeAttribute("aria-current");
           });
+          more.classList.remove("is-revealed");
+          revealStaggerTimers.push(
+            window.setTimeout(() => revealSection(more), reduceMotion ? 0 : 180)
+          );
           playMore();
         } else {
           pauseMore();
