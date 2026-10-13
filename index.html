@@ -25,7 +25,7 @@
     />
     <link
       rel="stylesheet"
-      href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;600;700&family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Carlito:ital,wght@0,400;0,700;1,400;1,700&family=Caveat:wght@500;600;700&family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0&display=swap"
     />
     <link rel="stylesheet" href="styles.css" />
     <script>
@@ -40,8 +40,8 @@
   </head>
   <body>
     <button type="button" class="theme-toggle" aria-label="Switch to dark mode">
-      <span class="material-symbols-outlined theme-icon-dark" aria-hidden="true">dark_mode</span>
-      <span class="material-symbols-outlined theme-icon-light" aria-hidden="true">light_mode</span>
+      <img class="theme-icon-dark" src="assets/icons/theme-dark.png" alt="" aria-hidden="true" />
+      <img class="theme-icon-light" src="assets/icons/theme-light.png" alt="" aria-hidden="true" />
     </button>
     <button type="button" class="back-top" aria-label="Back to top" aria-hidden="true">
       <img class="back-top-arrow" src="assets/up.png" alt="" />
@@ -50,12 +50,12 @@
       <header class="site-header">
         <a class="name" href="#top">Sumin Ma</a>
         <nav>
-          <a href="#top" class="is-current" aria-current="true"><span class="material-symbols-outlined" aria-hidden="true">planet</span>Home</a>
-          <a href="#research"><span class="material-symbols-outlined" aria-hidden="true">eco</span>Research</a>
-          <a href="#systems"><span class="material-symbols-outlined" aria-hidden="true">automation</span>Systems</a>
-          <a href="#experience"><span class="material-symbols-outlined" aria-hidden="true">work</span>Experience</a>
-          <a href="#education"><span class="material-symbols-outlined" aria-hidden="true">school</span>Education</a>
-          <a href="#activities"><span class="material-symbols-outlined" aria-hidden="true">more_horiz</span>Activities</a>
+          <a href="#top" class="is-current" aria-current="true"><img class="nav-icon" src="assets/icons/home.png" alt="" aria-hidden="true" />Home</a>
+          <a href="#research"><img class="nav-icon" src="assets/icons/research.png" alt="" aria-hidden="true" />Research</a>
+          <a href="#systems"><img class="nav-icon" src="assets/icons/systems.png" alt="" aria-hidden="true" />Systems</a>
+          <a href="#experience"><img class="nav-icon" src="assets/icons/experience.png" alt="" aria-hidden="true" />Experience</a>
+          <a href="#education"><img class="nav-icon" src="assets/icons/education.png" alt="" aria-hidden="true" />Education</a>
+          <a href="#activities"><img class="nav-icon" src="assets/icons/activities.png" alt="" aria-hidden="true" />Activities</a>
         </nav>
       </header>
 
@@ -68,16 +68,16 @@
             </div>
             <div class="icons">
               <a href="https://github.com/sumin-ma-1" title="GitHub" aria-label="GitHub" target="_blank" rel="noreferrer">
-                <span class="mdi mdi-github" aria-hidden="true"></span>
+                <img class="social-icon" src="assets/icons/github.png" alt="" aria-hidden="true" />
               </a>
               <a href="https://www.linkedin.com/in/suminmas" title="LinkedIn" aria-label="LinkedIn" target="_blank" rel="noreferrer">
-                <span class="mdi mdi-linkedin" aria-hidden="true"></span>
+                <img class="social-icon" src="assets/icons/linkedin.png" alt="" aria-hidden="true" />
               </a>
               <a href="mailto:suminma1209@gmail.com" title="Email" aria-label="Email">
-                <span class="mdi mdi-email-outline" aria-hidden="true"></span>
+                <img class="social-icon" src="assets/icons/email.png" alt="" aria-hidden="true" />
               </a>
               <button type="button" class="heart-btn" title="A bit more about me" aria-label="A bit more about me" aria-expanded="false" aria-controls="more">
-                <span class="material-symbols-outlined" aria-hidden="true">person_celebrate</span>
+                <img class="social-icon" src="assets/icons/about-more.png" alt="" aria-hidden="true" />
               </button>
             </div>
           </div>
@@ -102,7 +102,7 @@
         </section>
 
         <section id="research">
-          <h2><span class="material-symbols-outlined" aria-hidden="true">eco</span>Selected Research</h2>
+          <h2>Selected Research</h2>
           <article class="pub">
             <div class="pub-thumb-wrap">
               <img
@@ -164,7 +164,7 @@
         </section>
 
         <section id="systems">
-          <h2><span class="material-symbols-outlined" aria-hidden="true">automation</span>Selected Systems / Projects</h2>
+          <h2>Selected Systems / Projects</h2>
           <article class="pub">
             <video
               class="pub-video"
@@ -264,7 +264,7 @@
         </section>
 
         <section id="experience">
-          <h2><span class="material-symbols-outlined" aria-hidden="true">work</span>Experience</h2>
+          <h2>Experience</h2>
           <div class="entry">
             <p class="when">Apr 2026 – Present</p>
             <div>
@@ -304,7 +304,7 @@
         </section>
 
         <section id="education">
-          <h2><span class="material-symbols-outlined" aria-hidden="true">school</span>Education</h2>
+          <h2>Education</h2>
           <div class="entry">
             <p class="when">Mar 2022 – Feb 2026</p>
             <div>
@@ -328,7 +328,7 @@
         </section>
 
         <section id="activities">
-          <h2><span class="material-symbols-outlined" aria-hidden="true">more_horiz</span>Activities</h2>
+          <h2>Activities</h2>
           <div class="entry">
             <p class="when">Oct 2022</p>
             <div>
@@ -370,7 +370,7 @@
         </section>
 
         <section id="more" hidden>
-          <h2 class="more-title"><span class="material-symbols-outlined" aria-hidden="true">person_celebrate</span>A bit more about me</h2>
+          <h2 class="more-title">A bit more about me</h2>
           <div class="more-body">
             <div class="more-block">
               <p>I enjoy drawing! It helps me relax and clear my mind.</p>
@@ -464,7 +464,6 @@
     <script>
       const more = document.getElementById("more");
       const heart = document.querySelector(".heart-btn");
-      const heartIcon = heart.querySelector(".material-symbols-outlined");
       const clips = more.querySelectorAll("video");
 
       document.querySelectorAll(".pub-video").forEach((video) => {
@@ -506,9 +505,6 @@
 
       function setHeartOpen(on) {
         heart.setAttribute("aria-expanded", on ? "true" : "false");
-        heartIcon.style.fontVariationSettings = on
-          ? '"FILL" 1, "wght" 400, "GRAD" 0, "opsz" 24'
-          : '"FILL" 0, "wght" 400, "GRAD" 0, "opsz" 24';
       }
 
       const moreBody = more.querySelector(".more-body");
