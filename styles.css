@@ -390,13 +390,80 @@ section.is-current > h2 {
   font-size: 42px;
   font-weight: 600;
   letter-spacing: 0.01em;
-  line-height: 1;
+  line-height: 1.15;
   color: var(--ink);
   text-decoration: none;
+  display: inline-flex;
+  align-items: baseline;
+  overflow: visible;
+  padding: 0.08em 0.06em 0.12em 0;
+  margin: -0.08em 0 -0.12em 0;
 }
 
 .name:hover {
   text-decoration: none;
+}
+
+.name-hand {
+  display: inline-flex;
+  align-items: baseline;
+  overflow: visible;
+}
+
+.name-hand > span {
+  display: inline-block;
+  opacity: 0;
+  transform: translateY(0.08em) rotate(-3deg);
+  clip-path: inset(-0.35em 100% -0.3em -0.12em);
+  will-change: clip-path, opacity, transform;
+}
+
+.name.is-ready .name-hand > span {
+  animation: name-handwrite 0.52s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+  animation-delay: calc(0.08s + var(--i) * 0.11s);
+}
+
+.name-hand > .name-space {
+  width: 0.28em;
+  clip-path: none;
+  transform: none;
+}
+
+.name.is-ready .name-hand > .name-space {
+  animation-name: name-space;
+  animation-duration: 0.01s;
+}
+
+@keyframes name-handwrite {
+  0% {
+    opacity: 0;
+    transform: translateY(0.08em) rotate(-3deg);
+    clip-path: inset(-0.35em 100% -0.3em -0.12em);
+  }
+  55% {
+    opacity: 1;
+    transform: translateY(0.02em) rotate(-1deg);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) rotate(0deg);
+    clip-path: none;
+  }
+}
+
+@keyframes name-space {
+  to {
+    opacity: 1;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .name-hand > span {
+    opacity: 1;
+    transform: none;
+    clip-path: none;
+    animation: none !important;
+  }
 }
 
 nav {

@@ -48,7 +48,11 @@
     </button>
     <div class="page">
       <header class="site-header">
-        <a class="name" href="#top">Sumin Ma</a>
+        <a class="name" href="#top" aria-label="Sumin Ma">
+          <span class="name-hand" aria-hidden="true">
+            <span style="--i:0">S</span><span style="--i:1">u</span><span style="--i:2">m</span><span style="--i:3">i</span><span style="--i:4">n</span><span class="name-space" style="--i:5">&nbsp;</span><span style="--i:6">M</span><span style="--i:7">a</span>
+          </span>
+        </a>
         <nav>
           <a href="#top" class="is-current" aria-current="true"><img class="nav-icon" src="assets/icons/home.png" alt="" aria-hidden="true" />Home</a>
           <a href="#research"><img class="nav-icon" src="assets/icons/research.png" alt="" aria-hidden="true" />Research</a>
@@ -462,6 +466,26 @@
     </dialog>
 
     <script>
+      (function () {
+        const nameEl = document.querySelector(".name");
+        if (!nameEl) return;
+        const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+        function startNameWrite() {
+          nameEl.classList.add("is-ready");
+        }
+        if (reduceMotion) {
+          startNameWrite();
+          return;
+        }
+        const ready = document.fonts && document.fonts.load
+          ? document.fonts.load('600 42px "Caveat"')
+          : Promise.resolve();
+        Promise.race([
+          ready,
+          new Promise((resolve) => window.setTimeout(resolve, 900)),
+        ]).then(startNameWrite);
+      })();
+
       const more = document.getElementById("more");
       const heart = document.querySelector(".heart-btn");
       const clips = more.querySelectorAll("video");
