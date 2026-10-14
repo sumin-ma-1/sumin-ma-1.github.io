@@ -470,31 +470,32 @@
         const nameEl = document.querySelector(".name");
         if (!nameEl) return;
         const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-        function finishNameWrite() {
-          if (nameEl.classList.contains("is-written")) return;
-          nameEl.classList.add("is-written");
-          nameEl.querySelectorAll(".name-hand > span").forEach((span) => {
-            span.style.clipPath = "unset";
-            span.style.webkitClipPath = "unset";
-          });
-        }
+        const isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
+        if (isSafari) nameEl.classList.add("is-safari");
         function startNameWrite() {
           nameEl.classList.add("is-ready");
+          if (!isSafari) return;
           const last = nameEl.querySelector(".name-hand > span:last-child");
+          const finish = () => {
+            nameEl.classList.add("is-written");
+            nameEl.querySelectorAll(".name-hand > span").forEach((span) => {
+              span.style.clipPath = "unset";
+              span.style.webkitClipPath = "unset";
+            });
+          };
           if (last) {
             last.addEventListener(
               "animationend",
               (event) => {
-                if (event.animationName === "name-handwrite") finishNameWrite();
+                if (event.animationName === "name-handwrite") finish();
               },
               { once: true }
             );
           }
-          window.setTimeout(finishNameWrite, 1600);
+          window.setTimeout(finish, 1600);
         }
         if (reduceMotion) {
           startNameWrite();
-          finishNameWrite();
           return;
         }
         const ready = document.fonts && document.fonts.load

@@ -412,12 +412,10 @@ section.is-current > h2 {
 
 .name-hand > span {
   display: inline-block;
-  /* Safari ignores negative clip inset; pad the box so glyphs aren't cropped while writing */
-  padding: 0.45em 0.12em 0.32em;
-  margin: -0.45em -0.12em -0.32em;
   opacity: 0;
   transform: translateY(0.08em) rotate(-3deg);
   clip-path: inset(-0.35em 100% -0.3em -0.12em);
+  will-change: clip-path, opacity, transform;
 }
 
 .name.is-ready .name-hand > span {
@@ -427,8 +425,6 @@ section.is-current > h2 {
 
 .name-hand > .name-space {
   width: 0.28em;
-  padding: 0;
-  margin: 0;
   clip-path: none;
   transform: none;
 }
@@ -436,15 +432,6 @@ section.is-current > h2 {
 .name.is-ready .name-hand > .name-space {
   animation-name: name-space;
   animation-duration: 0.01s;
-}
-
-/* Safari: clear leftover clip-path after the commit animation finishes */
-.name.is-written .name-hand > span {
-  opacity: 1;
-  transform: none;
-  animation: none;
-  clip-path: unset;
-  -webkit-clip-path: unset;
 }
 
 @keyframes name-handwrite {
@@ -468,6 +455,26 @@ section.is-current > h2 {
   to {
     opacity: 1;
   }
+}
+
+/* Safari-only: same animation, larger clip box so Caveat "S" isn't cropped */
+.name.is-safari .name-hand > span {
+  will-change: auto;
+  padding: 1em 0.7em 0.45em 0.28em;
+  margin: -1em -0.7em -0.45em -0.28em;
+}
+
+.name.is-safari .name-hand > .name-space {
+  padding: 0;
+  margin: 0;
+}
+
+.name.is-safari.is-written .name-hand > span {
+  opacity: 1;
+  transform: none;
+  animation: none;
+  clip-path: unset;
+  -webkit-clip-path: unset;
 }
 
 @media (prefers-reduced-motion: reduce) {
