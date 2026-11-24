@@ -25,7 +25,11 @@
     />
     <link
       rel="stylesheet"
-      href="https://fonts.googleapis.com/css2?family=Carlito:ital,wght@0,400;0,700;1,400;1,700&family=Caveat:wght@500;600;700&family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Carlito:ital,wght@0,400;0,700;1,400;1,700&family=Caveat:wght@500;600;700&display=swap"
+    />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&amp;icon_names=close&amp;display=block"
     />
     <link rel="stylesheet" href="styles.css" />
     <script>
@@ -36,6 +40,19 @@
           (window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
         document.documentElement.setAttribute("data-theme", theme);
       })();
+
+      const isPageReload = performance.getEntriesByType("navigation")[0]?.type === "reload";
+      const showIntroOnLoad = isPageReload || !location.hash || location.hash === "#top";
+      if (showIntroOnLoad && "scrollRestoration" in history) {
+        const previousScrollRestoration = history.scrollRestoration;
+        history.scrollRestoration = "manual";
+        window.addEventListener("pageshow", () => {
+          history.scrollRestoration = previousScrollRestoration;
+        }, { once: true });
+      }
+      if (isPageReload && location.hash && location.hash !== "#top") {
+        history.replaceState(history.state, "", "#top");
+      }
     </script>
   </head>
   <body>
@@ -54,362 +71,439 @@
           </span>
         </a>
         <nav>
-          <a href="#top" class="is-current" aria-current="true"><img class="nav-icon" src="assets/icons/home.png" alt="" aria-hidden="true" />Home</a>
-          <a href="#research"><img class="nav-icon" src="assets/icons/research.png" alt="" aria-hidden="true" />Research</a>
-          <a href="#systems"><img class="nav-icon" src="assets/icons/systems.png" alt="" aria-hidden="true" />Systems</a>
-          <a href="#experience"><img class="nav-icon" src="assets/icons/experience.png" alt="" aria-hidden="true" />Experience</a>
-          <a href="#education"><img class="nav-icon" src="assets/icons/education.png" alt="" aria-hidden="true" />Education</a>
-          <a href="#activities"><img class="nav-icon" src="assets/icons/activities.png" alt="" aria-hidden="true" />Activities</a>
+          <a href="#top" class="is-current" aria-current="true">About</a>
+          <a href="#research">Research</a>
+          <a href="#systems">Systems</a>
+          <a href="#experience">Experience</a>
+          <a href="#education">Education</a>
+          <a href="#activities">Activities</a>
+          <a href="#more">Personal</a>
         </nav>
       </header>
+      <script>
+        (function () {
+          const nameEl = document.querySelector(".name");
+          if (!nameEl) return;
+          const isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
+          if (isSafari) nameEl.classList.add("is-safari");
+          function startNameWrite() {
+            nameEl.classList.add("is-ready");
+            if (!isSafari) return;
+            const last = nameEl.querySelector(".name-hand > span:last-child");
+            const finish = () => {
+              nameEl.classList.add("is-written");
+              nameEl.querySelectorAll(".name-hand > span").forEach((span) => {
+                span.style.clipPath = "unset";
+                span.style.webkitClipPath = "unset";
+              });
+            };
+            if (last) {
+              last.addEventListener(
+                "animationend",
+                (event) => {
+                  if (event.animationName === "name-handwrite") finish();
+                },
+                { once: true }
+              );
+            }
+            window.setTimeout(finish, 1600);
+          }
+          startNameWrite();
+        })();
+      </script>
 
 
       <main id="top">
-        <section class="about is-current">
-          <div class="about-side">
-            <div class="portrait-wrap">
+        <aside class="about-side" aria-label="Profile">
+          <div class="portrait-wrap">
+            <div class="portrait-flip">
               <img class="portrait" src="assets/me.png" alt="Portrait of Sumin Ma" />
-            </div>
-            <div class="icons">
-              <a href="https://github.com/sumin-ma-1" title="GitHub" aria-label="GitHub" target="_blank" rel="noreferrer">
-                <img class="social-icon" src="assets/icons/github.png" alt="" aria-hidden="true" />
-              </a>
-              <a href="https://www.linkedin.com/in/suminmas" title="LinkedIn" aria-label="LinkedIn" target="_blank" rel="noreferrer">
-                <img class="social-icon" src="assets/icons/linkedin.png" alt="" aria-hidden="true" />
-              </a>
-              <a href="mailto:suminma1209@gmail.com" title="Email" aria-label="Email">
-                <img class="social-icon" src="assets/icons/email.png" alt="" aria-hidden="true" />
-              </a>
-              <button type="button" class="heart-btn" title="A bit more about me" aria-label="A bit more about me" aria-expanded="false" aria-controls="more">
-                <img class="social-icon" src="assets/icons/about-more.png" alt="" aria-hidden="true" />
-              </button>
+              <img class="portrait portrait-back" src="assets/portrait.jpg" alt="" />
             </div>
           </div>
-          <div class="about-copy">
-            <p>
-              Hello! Thank you for visiting my website.
-            </p>
-            <p>
-              My name is Sumin, and I am currently a researcher at
-              <a href="https://www.keti.re.kr/" target="_blank" rel="noreferrer">Korea Electronics Technology Institute (KETI)</a>,
-              where I develop agent systems for workflow automation. I also conduct research with the
-              <a href="https://www.sim-research.org/" target="_blank" rel="noreferrer">Autonomous Mechanical Systems (AMS) Lab</a>
-              at Sookmyung Women’s University on UI detection and GUI grounding.
-            </p>
-            <p>
-              My work focuses on how computer-use agents understand user intent and act efficiently in everyday workflows. My current research studies how people refer to GUI elements and how agents can ground those expressions in the interface.
-            </p>
-            <p>
-              This work has led me to ask how agents can learn reusable procedures from people and past experience while recognizing when those procedures need to change, so users can delegate tasks without specifying every step and exception.
-            </p>
+          <div class="icons">
+            <a href="https://github.com/sumin-ma-1" title="GitHub" aria-label="GitHub" target="_blank" rel="noreferrer">
+              <img class="social-icon" src="assets/icons/github.png" alt="" aria-hidden="true" />
+              <span>GitHub</span>
+            </a>
+            <a href="https://www.linkedin.com/in/suminmas" title="LinkedIn" aria-label="LinkedIn" target="_blank" rel="noreferrer">
+              <img class="social-icon" src="assets/icons/linkedin.png" alt="" aria-hidden="true" />
+              <span>LinkedIn</span>
+            </a>
+            <a href="https://mail.google.com/mail/?view=cm&amp;fs=1&amp;to=suminma1209%40gmail.com" title="Email" aria-label="Email" target="_blank" rel="noreferrer">
+              <img class="social-icon" src="assets/icons/email.png" alt="" aria-hidden="true" />
+              <span>Email</span>
+            </a>
+            <a href="https://drive.google.com/file/d/1MAA9gdu3T7aPWt4zmAsvgpz6yi3681iU/view?usp=sharing" target="_blank" rel="noreferrer">
+              <img class="social-icon" src="assets/icons/cv.png" alt="" aria-hidden="true" />
+              <span>CV</span>
+            </a>
           </div>
-        </section>
+        </aside>
+        <div class="page-content">
+          <section class="about is-current">
+            <div class="about-copy">
+              <p>
+                Hello, I am a researcher at the <a href="https://www.keti.re.kr/" target="_blank" rel="noreferrer">Korea Electronics Technology Institute (KETI)</a> and conduct research with the <a href="https://www.sim-research.org/" target="_blank" rel="noreferrer">Autonomous Mechanical Systems (AMS) Lab</a> at Sookmyung Women&rsquo;s University, where I received my B.E. in IT Engineering.
+              </p>
+              <p>
+                My research focuses on how computer-use agents can execute tasks reliably and efficiently across software environments, even when unexpected events disrupt execution. In my current work, I investigate which steps from a successful run can be reused as code and which decisions require a language model at runtime. I evaluate this approach across variations of the same task by measuring task success, the number of model calls, and execution time.
+              </p>
+              <p>
+                At KETI, I build agents for workplace workflows. I design how these agents clarify incomplete requests, carry out tasks across software tools, and show users what actions they took.
+              </p>
+              <p>
+                With a background in computer science and experience in applied research, I hope to build on this work through doctoral research. I&rsquo;m particularly interested in how computer-use agents can verify outcomes and recover from failures with fewer model calls, and how they can recognize when to seek human input.
+              </p>
+            </div>
+          </section>
 
-        <section id="research">
-          <h2>Selected Research</h2>
-          <article class="pub">
-            <div class="pub-thumb-wrap">
+          <section id="research">
+            <h2>Selected Research</h2>
+            <div class="pub research-figure">
+              <img src="assets/icons/figure1.png" alt="Trajectory-based agent execution diagram" />
+              <div>
+                <h3>Trajectory-Based Agent Execution</h3>
+                <ul class="pub-points">
+                  <li>Built a framework that compiles reusable operations from computer-use trajectories into code and uses LLM calls for semantic decisions.</li>
+                  <li>Ongoing evaluation measures task success, model calls, and latency on held-out task variations.</li>
+                </ul>
+              </div>
+            </div>
+            <div class="pub research-figure">
+              <img src="assets/gui-grounding-transparent.png" alt="Overview of GUI grounding from user descriptions" />
+              <div>
+                <h3>GUI Grounding from User Descriptions</h3>
+                <ul class="pub-points">
+                  <li>Analyzed 508 referring expressions from 22 participants and found that 81.7% combined multiple cues.</li>
+                  <li>Developed a grounding ranker with same-target alignment that raised top-1 accuracy from 40.9% to 46.7%.</li>
+                </ul>
+              </div>
+            </div>
+            <div class="pub research-figure">
+              <img src="assets/voiceui.png" alt="Voice UI for single-step GUI control" />
+              <div>
+                <h3>Visual Fallback for Single-Step GUI Control</h3>
+                <ul class="pub-points">
+                  <li>Trained a YOLOv9-S icon detector on synthetic screenshots to support single-step desktop control when accessibility metadata was missing or insufficient.</li>
+                  <li>Evaluated icon size, density, and distractors. Including icon-like distractors during training raised ScreenSpot mAP@50 from 0.327 to 0.579.</li>
+                </ul>
+              </div>
+            </div>
+            <h2 class="cv-group-title">Publications</h2>
+            <article class="pub cv-entry">
+              <img src="assets/worklog.png" alt="Worklog workflow diagram" />
+              <div>
+                <div class="cv-entry-header">
+                  <h3>Transforming Unstructured Workplace Conversations into Knowledge Assets for Collaboration</h3>
+                  <p class="when">Nov 2026</p>
+                </div>
+                <p class="entry-meta">KIIT Fall Conference · Accepted conference paper</p>
+                <p><strong>Sumin Ma</strong>, Eunbi Cho, Eunyoung Hong, Dongsik Yoon, and Jeonghoon Kang</p>
+                <p>Poster presented by Sumin Ma.</p>
+                <p><a class="resource-link" href="#worklog">Related project: Worklog</a></p>
+              </div>
+            </article>
+            <article class="pub cv-entry">
+              <img src="assets/gui-detection.png" alt="Synthetic UI examples and icon detection results" />
+              <div>
+                <div class="cv-entry-header">
+                  <h3>A Resource-Efficient UI Icon Understanding Pipeline for Actionable Interaction via Synthetic Data</h3>
+                  <p class="when">Apr 2026</p>
+                </div>
+                <p class="entry-meta">KSME Spring Conference, IT &amp; Intelligent Convergence Division · Conference abstract, p. 133</p>
+                <p>Euenseo Kim, <strong>Sumin Ma</strong>, Yumin Lee, Seongbeen Lee, and Joo Yong Sim</p>
+                <p><a class="resource-link" href="https://www.dbpia.co.kr/journal/articleDetail?nodeId=NODE12739094" target="_blank" rel="noreferrer">Publication</a></p>
+              </div>
+            </article>
+          </section>
+
+          <section id="systems">
+            <h2>Selected Systems</h2>
+            <article class="pub">
+              <video
+                class="pub-video"
+                src="assets/operateai.mp4"
+                playsinline
+                webkit-playsinline
+                muted
+                loop
+                autoplay
+                preload="auto"
+                aria-label="OperateAI demo video"
+              ></video>
+              <div>
+                <h3>OperateAI</h3>
+                <p class="subtitle">Visual Workflow Orchestration</p>
+                <ul class="pub-points">
+                  <li>Develop a visual interface for configuring and executing agent workflows with connected tools.</li>
+                  <li>Make workflow structure, execution status, and intermediate outputs inspectable so users can follow the execution process.</li>
+                </ul>
+                <p>
+                  <a href="https://github.com/sumin-ma-1/operate-ai" target="_blank" rel="noreferrer">
+                    GitHub
+                  </a>
+                </p>
+              </div>
+            </article>
+            <article class="pub" id="worklog">
+              <video
+                class="pub-video"
+                src="assets/worklog.mp4"
+                playsinline
+                webkit-playsinline
+                muted
+                loop
+                autoplay
+                preload="auto"
+                aria-label="Worklog demo video"
+              ></video>
+              <div>
+                <h3>Worklog</h3>
+                <p class="subtitle">From Conversations to Daily Work Records</p>
+                <ul class="pub-points">
+                  <li>Develop a local-first agent that converts workplace conversations and shared files into dated work records using a local language model.</li>
+                  <li>Support natural-language Telegram requests with intent-aware workflow execution.</li>
+                </ul>
+                <p>
+                  <a href="https://github.com/sumin-ma-1/worklog-local-agent" target="_blank" rel="noreferrer">
+                    GitHub
+                  </a>
+                </p>
+              </div>
+            </article>
+            <article class="pub">
+              <video
+                class="pub-video"
+                src="assets/myown3.mp4"
+                playsinline
+                webkit-playsinline
+                muted
+                loop
+                autoplay
+                preload="auto"
+                aria-label="MyOwn demo video"
+              ></video>
+              <div>
+                <h3>MyOwn</h3>
+                <p class="subtitle">Conversational Task and Reminder Assistant</p>
+                <ul class="pub-points">
+                  <li>Create tasks and reminders, add scheduled events, and answer schedule queries through natural-language Telegram messages.</li>
+                  <li>Resolve missing information through lightweight multi-turn clarification.</li>
+                </ul>
+                <p>
+                  <a href="https://github.com/sumin-ma-1/myown" target="_blank" rel="noreferrer">
+                    GitHub
+                  </a>
+                </p>
+              </div>
+            </article>
+            <article class="pub" id="monday">
               <img
-                class="pub-thumb"
-                src="assets/soot-sprites-gathering-magical-dust.png"
-                alt="Soot sprites gathering magical dust"
+                src="assets/mon-tablet.png"
+                alt="MONDAY tablet interface for news-based economics learning"
               />
-            </div>
-            <div>
-              <h3>Adaptive Procedure Reuse in Computer-Use Agents</h3>
-              <p class="status">In preparation</p>
-              <ul class="pub-points">
-                <li>Explore how agents can reuse experience from demonstrations and prior executions to perform recurring computer tasks efficiently.</li>
-                <li>Study verification and recovery under interface changes and unexpected task states, evaluating both task success and execution time.</li>
-              </ul>
-            </div>
-          </article>
-          <article class="pub">
-            <img
-              src="assets/gui-grounding-transparent.png"
-              alt="Research overview for Grounding Human GUI Referring Expressions"
-            />
-            <div>
-              <h3>Grounding Human GUI Referring Expressions</h3>
-              <p class="status">Under review</p>
-              <ul class="pub-points">
-                <li>Study how people describe GUI targets using names, appearance, position, and surrounding context.</li>
-                <li>Develop and evaluate a training-free ranker using separate candidate views to examine how information organization affects grounding accuracy.</li>
-              </ul>
-            </div>
-          </article>
-          <article class="pub">
-            <img
-              src="assets/gui-detection.png"
-              alt="Synthetic UI examples and icon detection results"
-            />
-            <div>
-              <h3>A Resource-Efficient UI Icon Understanding Pipeline for Actionable Interaction via Synthetic Data</h3>
-              <p class="authors">Euenseo Kim, <strong>Sumin Ma</strong>, Yumin Lee, Seongbeen Lee, Joo Yong Sim</p>
-              <p class="status">Published · Conference abstract</p>
-              <p class="venue">KSME IT and Intelligent Convergence Division Spring Conference · April 2026</p>
-              <p class="venue">Oral presentation</p>
-              <p class="award-badge">
-                <span class="material-symbols-outlined" aria-hidden="true">celebration</span>
-                Award
-              </p>
-              <ul class="pub-points">
-                <li>Develop a lightweight UI icon detection pipeline trained on synthetic interface data.</li>
-                <li>Evaluate transfer to real interface screenshots and the potential to reduce manual annotation requirements.</li>
-              </ul>
-              <p>
-                <a href="https://www.dbpia.co.kr/journal/articleDetail?nodeId=NODE12739094" target="_blank" rel="noreferrer">
-                  <span class="material-symbols-outlined" aria-hidden="true">link_2</span>
-                  Publication
-                </a>
-              </p>
-            </div>
-          </article>
-        </section>
+              <div>
+                <h3>MONDAY</h3>
+                <p class="subtitle">A News-Based Economics Learning Platform for Beginners</p>
+                <p class="status">Undergraduate capstone</p>
+                <ul class="pub-points">
+                  <li>Designed the interface and learning flow, and developed an LLM-based pipeline that simplifies economic news and generates vocabulary explanations and quizzes at different difficulty levels.</li>
+                  <li>Fine-tuned a Korean language model to classify news into eight economic categories and used embedding-based clustering to organize related articles into thematic learning series.</li>
+                </ul>
+              </div>
+            </article>
+          </section>
 
-        <section id="systems">
-          <h2>Selected Systems / Projects</h2>
-          <article class="pub">
-            <video
-              class="pub-video"
-              src="assets/operateai.mp4"
-              playsinline
-              webkit-playsinline
-              muted
-              loop
-              autoplay
-              preload="auto"
-              aria-label="OperateAI demo video"
-            ></video>
-            <div>
-              <h3>OperateAI</h3>
-              <p class="subtitle">Visual Workflow Orchestration</p>
-              <ul class="pub-points">
-                <li>Develop a visual interface for configuring and executing agent workflows with connected tools.</li>
-                <li>Make workflow structure, execution status, and intermediate outputs inspectable so users can follow the execution process.</li>
-              </ul>
-              <p>
-                <a href="https://github.com/sumin-ma-1/operate-ai" target="_blank" rel="noreferrer">
-                  <span class="material-symbols-outlined" aria-hidden="true">link_2</span>
-                  GitHub
-                </a>
-              </p>
-            </div>
-          </article>
-          <article class="pub">
-            <video
-              class="pub-video"
-              src="assets/worklog.mp4"
-              playsinline
-              webkit-playsinline
-              muted
-              loop
-              autoplay
-              preload="auto"
-              aria-label="Worklog demo video"
-            ></video>
-            <div>
-              <h3>Worklog</h3>
-              <p class="subtitle">From Conversations to Daily Work Records</p>
-              <ul class="pub-points">
-                <li>Develop a local-first agent that converts workplace conversations and shared files into dated work records using a local language model.</li>
-                <li>Support natural-language Telegram requests with intent-aware workflow execution.</li>
-              </ul>
-              <p>
-                <a href="https://github.com/sumin-ma-1/worklog-local-agent" target="_blank" rel="noreferrer">
-                  <span class="material-symbols-outlined" aria-hidden="true">link_2</span>
-                  GitHub
-                </a>
-              </p>
-            </div>
-          </article>
-          <article class="pub">
-            <video
-              class="pub-video"
-              src="assets/myown3.mp4"
-              playsinline
-              webkit-playsinline
-              muted
-              loop
-              autoplay
-              preload="auto"
-              aria-label="MyOwn demo video"
-            ></video>
-            <div>
-              <h3>MyOwn</h3>
-              <p class="subtitle">Conversational Task and Reminder Assistant</p>
-              <ul class="pub-points">
-                <li>Create tasks and reminders, add scheduled events, and answer schedule queries through natural-language Telegram messages.</li>
-                <li>Resolve missing information through lightweight multi-turn clarification.</li>
-              </ul>
-              <p>
-                <a href="https://github.com/sumin-ma-1/myown" target="_blank" rel="noreferrer">
-                  <span class="material-symbols-outlined" aria-hidden="true">link_2</span>
-                  GitHub
-                </a>
-              </p>
-            </div>
-          </article>
-          <article class="pub">
-            <img
-              src="assets/mon-tablet.png"
-              alt="MONDAY tablet interface for news-based economics learning"
-            />
-            <div>
-              <h3>MONDAY</h3>
-              <p class="subtitle">A News-Based Economics Learning Platform for Beginners</p>
-              <p class="status">Undergraduate capstone</p>
-              <ul class="pub-points">
-                <li>Designed the interface and learning flow, and developed an LLM-based pipeline that simplifies economic news and generates vocabulary explanations and quizzes at different difficulty levels.</li>
-                <li>Fine-tuned a Korean language model to classify news into eight economic categories and used embedding-based clustering to organize related articles into thematic learning series.</li>
-              </ul>
-            </div>
-          </article>
-        </section>
-
-        <section id="experience">
-          <h2>Experience</h2>
-          <div class="entry">
-            <p class="when">Apr 2026 – Present</p>
-            <div>
-              <div class="entry-top">
-                <h3>Researcher, Korea Electronics Technology Institute (KETI)</h3>
+          <section id="experience">
+            <h2>Experience</h2>
+            <div class="entry">
+              <div class="entry-timing">
                 <p class="place">Seongnam, South Korea</p>
+                <p class="when">Apr 2026 - Present</p>
               </div>
-              <p>
-                Develop agentic AI systems for workflow automation, with an emphasis on workflow visualization, agent orchestration, and tool use.
-              </p>
+              <div>
+                <div class="entry-top">
+                  <h3>Korea Electronics Technology Institute</h3>
+                  <p class="entry-meta">Researcher</p>
+                </div>
+                <p>
+                  Develop agentic AI systems for workflow automation, with an emphasis on workflow visualization, agent orchestration, and tool use.
+                </p>
+              </div>
             </div>
-          </div>
-          <div class="entry">
-            <p class="when">Aug 2025 – Mar 2026</p>
-            <div>
-              <div class="entry-top">
-                <h3>Undergraduate Student Researcher, AMS Lab, Sookmyung Women’s University</h3>
+            <div class="entry">
+              <div class="entry-timing">
                 <p class="place">Seoul, South Korea</p>
+                <p class="when">Aug 2025 - Present</p>
               </div>
-              <p>
-                Conduct research on UI detection and GUI grounding for computer-use agents, including candidate representations and reference ambiguity.
-              </p>
+              <div>
+                <div class="entry-top">
+                  <h3>Autonomous Mechanical Systems Lab, Sookmyung Women’s University</h3>
+                  <p class="entry-meta">Researcher</p>
+                  <p class="entry-meta">Advisor: Prof. Joo Yong Sim</p>
+                </div>
+                <p>
+                  Conduct research on UI detection and GUI grounding for computer-use agents, including candidate representations and reference ambiguity.
+                </p>
+              </div>
             </div>
-          </div>
-          <div class="entry">
-            <p class="when">Jun 2023 – Jun 2024</p>
-            <div>
-              <div class="entry-top">
-                <h3>Information Technology Intern, Hyundai Digitech</h3>
+            <div class="entry">
+              <div class="entry-timing">
                 <p class="place">Richardson, TX, USA</p>
+                <p class="when">Jun 2023 - Jun 2024</p>
               </div>
-              <p>
-                Developed web-based systems for safety inspections, employee KPI management, and inventory and asset management.
-              </p>
+              <div>
+                <div class="entry-top">
+                  <h3>Hyundai Digitech</h3>
+                  <p class="entry-meta">Information Technology Intern</p>
+                </div>
+                <p>
+                  Developed web-based systems for safety inspections, employee KPI management, and inventory and asset management.
+                </p>
+              </div>
             </div>
-          </div>
-        </section>
+          </section>
 
-        <section id="education">
-          <h2>Education</h2>
-          <div class="entry">
-            <p class="when">Mar 2022 – Feb 2026</p>
-            <div>
-              <div class="entry-top">
-                <h3>B.E. in IT Engineering, Sookmyung Women’s University</h3>
+          <section id="education">
+            <h2>Education</h2>
+            <div class="entry">
+              <p class="entry-meta entry-gpa">GPA: 4.1 / 4.5</p>
+              <div class="entry-timing">
                 <p class="place">Seoul, South Korea</p>
+                <p class="when">Mar 2022 - Feb 2026</p>
               </div>
-              <p>GPA: 4.1 / 4.5</p>
+              <div>
+                <div class="entry-top">
+                  <h3>Sookmyung Women’s University</h3>
+                  <p class="entry-meta">B.E. in IT Engineering</p>
+                </div>
+                <p><strong>Thesis:</strong> Learning Economics Through News (Advisor: Prof. Seonghoon Jeong)</p>
+                <p>Fine-tuned KLUE-RoBERTa-large to classify Korean economic news into eight categories (test macro-F1: 0.8003) and used embeddings to group related articles into reading series.</p>
+                <p><a class="resource-link" href="#monday">Related project: MONDAY</a></p>
+              </div>
             </div>
-          </div>
-          <div class="entry">
-            <p class="when">Fall 2024</p>
-            <div>
-              <div class="entry-top">
-                <h3>Exchange Student, Computer Science, Albright College</h3>
+            <div class="entry">
+              <p class="entry-meta entry-gpa">GPA: 4.0 / 4.0</p>
+              <div class="entry-timing">
                 <p class="place">Reading, PA, USA</p>
+                <p class="when">Aug 2024 - Dec 2024</p>
               </div>
-              <p>GPA: 4.0 / 4.0</p>
+              <div>
+                <div class="entry-top">
+                  <h3>Albright College</h3>
+                  <p class="entry-meta">Exchange Student, Computer Science</p>
+                </div>
+              </div>
             </div>
-          </div>
-        </section>
+          </section>
 
-        <section id="activities">
-          <h2>Activities</h2>
-          <div class="entry">
-            <p class="when">Oct 2022</p>
-            <div>
-              <div class="entry-top">
-                <h3>New Business Idea Award, Big Data Hackathon</h3>
-                <p class="place">Shinhan Financial Group</p>
+          <section id="activities">
+            <h2 class="cv-group-title">Awards &amp; Honors</h2>
+            <article class="cv-entry">
+              <div class="cv-entry-header">
+                <h3>Outstanding Paper Award</h3>
+                <p class="when">Apr 2026</p>
               </div>
-              <p>Proposed a travel service that uses card transaction data to recommend personalized travel routes and support shared expense management for groups.</p>
-            </div>
-          </div>
-          <div class="entry">
-            <p class="when">Mar 2022 – Feb 2023</p>
-            <div>
-              <div class="entry-top">
-                <h3>Team Leader, Web Operations Team</h3>
-                <p class="place">IT Engineering Student Society, Sookmyung Women’s University</p>
+                <p class="entry-meta">KSME 2026 Spring Conference</p>
+              <p>Recognized for research on GUI icon detection and captioning across synthetic data conditions.</p>
+            </article>
+            <article class="cv-entry">
+              <div class="cv-entry-header">
+                <h3>Cohort Scholar</h3>
+                <p class="when">Jun 2024</p>
               </div>
-              <p>Led website operations and technical content publication, and was recognized as an outstanding executive.</p>
-            </div>
-          </div>
-          <div class="entry">
-            <p class="when">Aug 2023 – Jan 2024</p>
-            <div>
-              <div class="entry-top">
-                <h3>Volunteer, Feed My Starving Children</h3>
+                <p class="entry-meta">Korea-U.S. Advanced Industry Youth Exchange Program</p>
+              <p>Selected for a government-supported U.S. exchange based on academic achievement and potential to contribute to advanced industries.</p>
+            </article>
+            <article class="cv-entry">
+              <div class="cv-entry-header">
+                <h3>New Business Idea Award</h3>
+                <p class="when">Oct 2022</p>
               </div>
-              <p>Collaborated in packing nutritious meals for children facing food insecurity worldwide.</p>
-            </div>
-          </div>
-          <div class="entry">
-            <p class="when">Dec 2023 – Apr 2024</p>
-            <div>
-              <div class="entry-top">
-                <h3>Volunteer, Brown Bag Outreach</h3>
+                <p class="entry-meta">Shinhan Financial Group Big Data Hackathon</p>
+              <p>Led a team that proposed using card transaction data for travel-route recommendations and shared expenses.</p>
+            </article>
+            <h2 class="cv-group-title">Service &amp; Leadership</h2>
+            <article class="cv-entry">
+              <div class="cv-entry-header">
+                <div class="cv-entry-heading">
+                  <h3>Brown Bag Outreach</h3>
+                  <p class="entry-meta">Volunteer</p>
+                </div>
+                <div class="entry-timing">
+                  <p class="place">Plano, TX, USA</p>
+                  <p class="when">Dec 2023 - Apr 2024</p>
+                </div>
               </div>
-              <p>Packed bags of nutritious food and distributed them to people experiencing homelessness in the North Dallas area.</p>
-            </div>
-          </div>
-        </section>
+              <p>Packed and distributed meal kits for people experiencing homelessness.</p>
+            </article>
+            <article class="cv-entry">
+              <div class="cv-entry-header">
+                <div class="cv-entry-heading">
+                  <h3>Feed My Starving Children</h3>
+                  <p class="entry-meta">Volunteer</p>
+                </div>
+                <div class="entry-timing">
+                  <p class="place">Richardson, TX, USA</p>
+                  <p class="when">Aug 2023 - Jan 2024</p>
+                </div>
+              </div>
+              <p>Packed nutritious food packages for children facing food insecurity.</p>
+            </article>
+            <article class="cv-entry">
+              <div class="cv-entry-header">
+                <div class="cv-entry-heading">
+                  <h3>IT Engineering Student Society, Sookmyung Women’s University</h3>
+                  <p class="entry-meta">Team Leader</p>
+                </div>
+                <div class="entry-timing">
+                  <p class="place">Seoul, South Korea</p>
+                  <p class="when">Mar 2022 - Feb 2023</p>
+                </div>
+              </div>
+              <p>Led website operations, organized web framework study sessions, and oversaw technical article publication. Recognized for outstanding team leadership.</p>
+            </article>
+          </section>
 
-        <section id="more" hidden>
-          <h2 class="more-title">A bit more about me</h2>
-          <div class="more-body">
-            <div class="more-block">
-              <p>I enjoy drawing! It helps me relax and clear my mind.</p>
-              <div class="drawings crop">
-                <video src="assets/draw2.mp4" playsinline muted loop></video>
-                <img src="assets/draw1.png" alt="Pencil drawing of a tiger" />
+          <section id="more">
+            <h2 class="more-title">A bit more about me</h2>
+            <div class="more-body" tabindex="0" role="group" aria-label="Personal slides">
+              <div class="more-block">
+                <p>I enjoy drawing! It helps me relax and clear my mind.</p>
+                <div class="drawings crop">
+                  <video src="assets/draw2.mp4" playsinline muted loop></video>
+                  <img src="assets/draw1.png" alt="Pencil drawing of a tiger" />
+                </div>
+              </div>
+
+              <div class="more-block">
+                <p>I like little messages I come across in everyday life.</p>
+                <div class="drawings crop">
+                  <img src="assets/notes1.jpg" alt="Dove chocolate wrapper note" />
+                  <img src="assets/notes2.jpg" alt="Handwritten note on a bookshelf" />
+                </div>
+              </div>
+
+              <div class="more-block">
+                <p>I love kongdduck (콩떡), my sister's puppy. He is adorable.</p>
+                <div class="drawings crop">
+                  <video src="assets/kong2.mp4" playsinline muted loop></video>
+                  <video src="assets/kong3.mp4" playsinline muted loop></video>
+                </div>
               </div>
             </div>
-
-            <div class="more-block">
-              <p>I like little messages I come across in everyday life.</p>
-              <div class="drawings crop">
-                <img src="assets/notes1.jpg" alt="Dove chocolate wrapper note" />
-                <img src="assets/notes2.jpg" alt="Handwritten note on a bookshelf" />
-              </div>
+            <div class="more-dots" role="group" aria-label="Choose a personal slide">
+              <button type="button" aria-label="Drawing" aria-current="true"></button>
+              <button type="button" aria-label="Notes"></button>
+              <button type="button" aria-label="Kongdduck"></button>
             </div>
+          </section>
 
-            <div class="more-block">
-              <p>I love kongdduck (콩떡), my sister's puppy. He is adorable.</p>
-              <div class="drawings crop">
-                <video src="assets/kong2.mp4" playsinline muted loop></video>
-                <video src="assets/kong3.mp4" playsinline muted loop></video>
-              </div>
-            </div>
-          </div>
-          <div class="more-dots" aria-hidden="true">
-            <span class="on"></span>
-            <span></span>
-            <span></span>
-          </div>
-        </section>
-
-        <footer class="site-footer" id="contact">
-          <a href="mailto:suminma1209@gmail.com">suminma1209@gmail.com</a>
-        </footer>
+          <footer class="site-footer" id="contact">
+            <a href="mailto:suminma1209@gmail.com">suminma1209@gmail.com</a>
+          </footer>
+        </div>
       </main>
     </div>
 
@@ -466,49 +560,7 @@
     </dialog>
 
     <script>
-      (function () {
-        const nameEl = document.querySelector(".name");
-        if (!nameEl) return;
-        const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-        const isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
-        if (isSafari) nameEl.classList.add("is-safari");
-        function startNameWrite() {
-          nameEl.classList.add("is-ready");
-          if (!isSafari) return;
-          const last = nameEl.querySelector(".name-hand > span:last-child");
-          const finish = () => {
-            nameEl.classList.add("is-written");
-            nameEl.querySelectorAll(".name-hand > span").forEach((span) => {
-              span.style.clipPath = "unset";
-              span.style.webkitClipPath = "unset";
-            });
-          };
-          if (last) {
-            last.addEventListener(
-              "animationend",
-              (event) => {
-                if (event.animationName === "name-handwrite") finish();
-              },
-              { once: true }
-            );
-          }
-          window.setTimeout(finish, 1600);
-        }
-        if (reduceMotion) {
-          startNameWrite();
-          return;
-        }
-        const ready = document.fonts && document.fonts.load
-          ? document.fonts.load('600 42px "Caveat"')
-          : Promise.resolve();
-        Promise.race([
-          ready,
-          new Promise((resolve) => window.setTimeout(resolve, 900)),
-        ]).then(startNameWrite);
-      })();
-
       const more = document.getElementById("more");
-      const heart = document.querySelector(".heart-btn");
       const clips = more.querySelectorAll("video");
 
       document.querySelectorAll(".pub-video").forEach((video) => {
@@ -547,74 +599,6 @@
       }
 
       clips.forEach(limitClip);
-
-      function setHeartOpen(on) {
-        heart.setAttribute("aria-expanded", on ? "true" : "false");
-      }
-
-      const moreBody = more.querySelector(".more-body");
-      const moreBlocks = [...more.querySelectorAll(".more-block")];
-      const moreDots = more.querySelectorAll(".more-dots span");
-
-      function moreIndex() {
-        const w = moreBody.clientWidth || 1;
-        return Math.min(moreBlocks.length - 1, Math.max(0, Math.round(moreBody.scrollLeft / w)));
-      }
-
-      function syncMoreSlide() {
-        const idx = moreIndex();
-        moreDots.forEach((dot, i) => dot.classList.toggle("on", i === idx));
-        moreBlocks.forEach((block, i) => {
-          block.querySelectorAll("video").forEach((clip) => {
-            if (i === idx) clip.play().catch(() => {});
-            else clip.pause();
-          });
-        });
-      }
-
-      function goMore(idx) {
-        const next = Math.min(moreBlocks.length - 1, Math.max(0, idx));
-        moreBody.scrollTo({ left: next * moreBody.clientWidth, behavior: "smooth" });
-      }
-
-      moreBody.addEventListener("scroll", syncMoreSlide, { passive: true });
-      moreDots.forEach((dot, i) => {
-        dot.addEventListener("click", () => goMore(i));
-      });
-
-      let moreWheelLock = false;
-      moreBody.addEventListener("wheel", (event) => {
-        if (Math.abs(event.deltaX) > Math.abs(event.deltaY)) return;
-        event.preventDefault();
-        if (moreWheelLock) return;
-        moreWheelLock = true;
-        goMore(moreIndex() + (event.deltaY > 0 ? 1 : -1));
-        window.setTimeout(() => {
-          moreWheelLock = false;
-        }, 420);
-      }, { passive: false });
-
-      document.addEventListener("keydown", (event) => {
-        if (more.hidden) return;
-        if (event.key === "ArrowRight") goMore(moreIndex() + 1);
-        if (event.key === "ArrowLeft") goMore(moreIndex() - 1);
-      });
-
-      function playMore() {
-        moreBody.scrollLeft = 0;
-        moreBlocks.forEach((block, i) => {
-          block.querySelectorAll("video").forEach((clip) => {
-            clip.currentTime = 0;
-            if (i === 0) clip.play().catch(() => {});
-            else clip.pause();
-          });
-        });
-        requestAnimationFrame(syncMoreSlide);
-      }
-
-      function pauseMore() {
-        clips.forEach((clip) => clip.pause());
-      }
 
       const viewer = document.getElementById("media-view");
       const viewerImg = viewer.querySelector("img");
@@ -672,227 +656,267 @@
       });
 
       const night = document.querySelector(".page-night");
-      function updateNight() {
+      function updateScrollEffects() {
         const max = document.documentElement.scrollHeight - window.innerHeight;
         const p = max <= 0 ? 0 : Math.min(1, Math.max(0, window.scrollY / max));
+        header.style.setProperty("--scroll-progress", p.toFixed(4));
         const t = p * p * (3 - 2 * p);
         night.style.setProperty("--night-depth", t.toFixed(4));
       }
 
-      const revealSections = [...document.querySelectorAll("main > section:not(.about)")];
+      const revealSections = [...document.querySelectorAll(".page-content > section:not(.about)")];
       const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-      let sectionObserver = null;
+      const moreBody = more.querySelector(".more-body");
+      const moreDots = [...more.querySelectorAll(".more-dots button")];
+      let lastSlideWheel = -Infinity;
+
+      function currentSlide() {
+        return Math.round(moreBody.scrollLeft / (moreBody.clientWidth || 1));
+      }
+
+      function goToSlide(index) {
+        const slide = Math.min(moreDots.length - 1, Math.max(0, index));
+        moreBody.scrollTo({
+          left: slide * moreBody.clientWidth,
+          behavior: reduceMotion ? "instant" : "smooth",
+        });
+      }
+
+      function updateSlideDots() {
+        const active = currentSlide();
+        moreDots.forEach((dot, index) => {
+          if (index === active) dot.setAttribute("aria-current", "true");
+          else dot.removeAttribute("aria-current");
+        });
+      }
+
+      moreBody.addEventListener("scroll", updateSlideDots, { passive: true });
+      moreDots.forEach((dot, index) => {
+        dot.addEventListener("click", () => goToSlide(index));
+      });
+      moreBody.addEventListener("keydown", (event) => {
+        if (event.key !== "ArrowLeft" && event.key !== "ArrowRight") return;
+        event.preventDefault();
+        goToSlide(currentSlide() + (event.key === "ArrowRight" ? 1 : -1));
+      });
+      more.addEventListener("wheel", (event) => {
+        if (event.ctrlKey || event.shiftKey || Math.abs(event.deltaY) <= Math.abs(event.deltaX)) return;
+        const now = performance.now();
+        const sameGesture = now - lastSlideWheel < 160;
+        const next = currentSlide() + Math.sign(event.deltaY);
+        if (!sameGesture && (next < 0 || next >= moreDots.length)) return;
+        if (!event.cancelable) return;
+        event.preventDefault();
+        lastSlideWheel = now;
+        if (!sameGesture) goToSlide(next);
+      }, { passive: false });
+
       function revealSection(section) {
         section.classList.add("is-revealed");
       }
-      function resetReveals() {
-        if (reduceMotion) {
-          revealSections.forEach(revealSection);
+
+      if (reduceMotion || !("IntersectionObserver" in window)) {
+        revealSections.forEach(revealSection);
+      } else {
+        const sectionObserver = new IntersectionObserver((entries) => {
+          entries.forEach(({ isIntersecting, target }) => {
+            if (!isIntersecting) return;
+            revealSection(target);
+            sectionObserver.unobserve(target);
+          });
+        }, { rootMargin: "0px 0px 42% 0px" });
+        revealSections.forEach((section) => sectionObserver.observe(section));
+      }
+
+      if ("IntersectionObserver" in window) {
+        const personalObserver = new IntersectionObserver((entries) => {
+          entries.forEach(({ isIntersecting, target }) => {
+            if (isIntersecting) target.play().catch(() => {});
+            else target.pause();
+          });
+        }, { threshold: 0.25 });
+        clips.forEach((clip) => personalObserver.observe(clip));
+      }
+
+      const header = document.querySelector(".site-header");
+      const main = document.getElementById("top");
+      const profile = main.querySelector(".about-side");
+      const aboutCopy = main.querySelector(".about-copy");
+
+      function updateIntroSize() {
+        main.style.setProperty("--intro-profile-height", profile.offsetHeight + "px");
+        main.style.setProperty("--intro-copy-height", aboutCopy.offsetHeight + "px");
+      }
+
+      let introCollapseTimer;
+      let lastIntroWheel = -Infinity;
+
+      function resetIntro() {
+        window.clearTimeout(introCollapseTimer);
+        lastIntroWheel = -Infinity;
+        main.classList.remove("is-intro", "is-intro-collapsing");
+      }
+
+      function collapseIntro() {
+        if (!reduceMotion) {
+          main.classList.add("is-intro-collapsing");
+          introCollapseTimer = window.setTimeout(() => {
+            main.classList.remove("is-intro-collapsing");
+          }, 590);
+        }
+        main.classList.remove("is-intro");
+        if (window.scrollY > 0) window.scrollTo({ top: 0, behavior: "instant" });
+      }
+
+      window.addEventListener("wheel", (event) => {
+        if (event.ctrlKey || event.deltaY <= 0 || Math.abs(event.deltaX) > event.deltaY) return;
+        const now = performance.now();
+        const intro = main.classList.contains("is-intro");
+        const collapsing = main.classList.contains("is-intro-collapsing");
+        if (!intro && !collapsing && now - lastIntroWheel > 120) return;
+        if (event.cancelable) event.preventDefault();
+        lastIntroWheel = now;
+        if (intro) collapseIntro();
+      }, { passive: false });
+
+      function showIntro() {
+        resetIntro();
+        updateIntroSize();
+        main.classList.add("is-intro");
+        window.scrollTo({ top: 0, behavior: "instant" });
+      }
+
+      header.querySelector(".name").addEventListener("click", (event) => {
+        if (event.ctrlKey || event.metaKey || event.shiftKey || event.altKey) return;
+        event.preventDefault();
+        cancelMenuScroll();
+        if (location.hash !== "#top") history.pushState(null, "", "#top");
+        showIntro();
+      });
+
+      if ("ResizeObserver" in window) {
+        const introObserver = new ResizeObserver(updateIntroSize);
+        introObserver.observe(profile);
+        introObserver.observe(aboutCopy);
+      }
+      const navSections = [...header.querySelectorAll("nav a")].map((link) => {
+        const href = link.getAttribute("href");
+        const target = href === "#top" ? document.querySelector(".about") : document.querySelector(href);
+        return { link, target };
+      });
+      const backTop = document.querySelector(".back-top");
+
+      let menuScrollFrame = 0;
+
+      function cancelMenuScroll() {
+        if (!menuScrollFrame) return;
+        cancelAnimationFrame(menuScrollFrame);
+        menuScrollFrame = 0;
+      }
+
+      function sectionDocumentTop(target) {
+        let top = 0;
+        for (let element = target; element; element = element.offsetParent) {
+          top += element.offsetTop;
+        }
+        return top;
+      }
+
+      function sectionScrollTop(target) {
+        const root = document.documentElement;
+        const inset = parseFloat(getComputedStyle(root).scrollPaddingTop) || header.offsetHeight;
+        return Math.max(0, Math.min(sectionDocumentTop(target) - inset, root.scrollHeight - window.innerHeight));
+      }
+
+      function scrollToSection(top) {
+        const from = window.scrollY;
+        const distance = top - from;
+        if (reduceMotion || Math.abs(distance) < 2) {
+          window.scrollTo({ top, behavior: "instant" });
           return;
         }
-        revealSections.forEach((section) => section.classList.remove("is-revealed"));
-        if (sectionObserver) sectionObserver.disconnect();
-        sectionObserver = new IntersectionObserver(
-          (entries) => {
-            entries.forEach((entry) => {
-              if (entry.isIntersecting) {
-                revealSection(entry.target);
-                sectionObserver.unobserve(entry.target);
-              }
-            });
-          },
-          { rootMargin: "0px 0px 42% 0px", threshold: 0 }
-        );
-        revealSections.forEach((section) => {
-          if (section.hidden) {
-            revealSection(section);
-            return;
-          }
-          sectionObserver.observe(section);
-        });
-      }
-      function revealVisiblePanels() {
-        revealSections.forEach((section) => {
-          if (!section.hidden) revealSection(section);
-        });
+
+        const duration = Math.min(1050, 480 + Math.abs(distance) * 0.22);
+        const started = performance.now();
+
+        function step(now) {
+          const progress = Math.min(1, (now - started) / duration);
+          const eased = progress * progress * (3 - 2 * progress);
+          window.scrollTo({ top: from + distance * eased, behavior: "instant" });
+          menuScrollFrame = progress < 1 ? requestAnimationFrame(step) : 0;
+        }
+
+        menuScrollFrame = requestAnimationFrame(step);
       }
 
-      const navSections = [...document.querySelectorAll("nav a")].map((link) => {
-        const href = link.getAttribute("href");
-        const key = href === "#top" ? "top" : href.slice(1);
-        const target =
-          href === "#top" ? document.querySelector(".about") : document.querySelector(href);
-        return { link, target, key };
-      }).filter((item) => item.target);
+      navSections.forEach(({ link, target }) => {
+        link.addEventListener("click", (event) => {
+          if (event.ctrlKey || event.metaKey || event.shiftKey || event.altKey || !target) return;
+          event.preventDefault();
+          cancelMenuScroll();
+          resetIntro();
+          const hash = link.getAttribute("href");
+          if (location.hash !== hash) history.pushState(null, "", hash);
+          scrollToSection(hash === "#top" ? 0 : sectionScrollTop(target));
+        });
+      });
 
-      let activeKey = "top";
+      for (const eventName of ["wheel", "touchstart", "popstate"]) {
+        window.addEventListener(eventName, cancelMenuScroll, { passive: true });
+      }
 
-      function setCurrent(current) {
+      window.addEventListener("keydown", (event) => {
+        if (["ArrowUp", "ArrowDown", "PageUp", "PageDown", "Home", "End", " "].includes(event.key)) {
+          cancelMenuScroll();
+        }
+      });
+
+      function updatePageScroll() {
+        if (window.scrollY > 20 && main.classList.contains("is-intro")) {
+          collapseIntro();
+        } else if (window.scrollY > 0 && main.classList.contains("is-intro-collapsing")) {
+          window.scrollTo({ top: 0, behavior: "instant" });
+        }
+        updateScrollEffects();
+        const contentInset = parseFloat(getComputedStyle(document.documentElement).scrollPaddingTop);
+        const lead = Math.min(96, window.innerHeight * 0.12);
+        const threshold = window.scrollY + (contentInset || header.offsetHeight) + lead;
+        let current = navSections[0];
+        for (const item of navSections) {
+          if (sectionDocumentTop(item.target) > threshold) break;
+          current = item;
+        }
+        if (window.scrollY > 0 && window.scrollY + window.innerHeight >= document.documentElement.scrollHeight - 2) {
+          current = navSections[navSections.length - 1];
+        }
         navSections.forEach((item) => {
-          const on = item === current;
-          item.link.classList.toggle("is-current", on);
-          item.target.classList.toggle("is-current", on);
-          if (on) item.link.setAttribute("aria-current", "true");
+          const active = item === current;
+          item.link.classList.toggle("is-current", active);
+          item.target.classList.toggle("is-current", active);
+          if (active) item.link.setAttribute("aria-current", "location");
           else item.link.removeAttribute("aria-current");
         });
-      }
-
-      function updateActiveNav() {
-        if (activeKey !== "top") return;
-        const mid = window.innerHeight / 2;
-        let current = navSections[0];
-        let closest = Infinity;
-        navSections.forEach((item) => {
-          const box = item.target.getBoundingClientRect();
-          const dist = Math.abs((box.top + box.bottom) / 2 - mid);
-          if (dist < closest) {
-            closest = dist;
-            current = item;
-          }
-        });
-        setCurrent(current);
-      }
-
-      const mainEl = document.querySelector("main");
-      let homeCompact = false;
-      let revealStaggerTimers = [];
-
-      function clearRevealStaggers() {
-        revealStaggerTimers.forEach((id) => window.clearTimeout(id));
-        revealStaggerTimers = [];
-      }
-
-      function setHomeCompact(on) {
-        if (homeCompact === on) return;
-        homeCompact = on;
-        mainEl.classList.toggle("is-home-compact", on);
-        clearRevealStaggers();
-        if (on) {
-          if (sectionObserver) {
-            sectionObserver.disconnect();
-            sectionObserver = null;
-          }
-          window.scrollTo(0, 0);
-          revealSections.forEach((section, i) => {
-            if (section.hidden) return;
-            section.classList.remove("is-revealed");
-            const delay = reduceMotion ? 0 : 180 + i * 110;
-            revealStaggerTimers.push(
-              window.setTimeout(() => revealSection(section), delay)
-            );
-          });
-        }
-      }
-
-      function updateHomeCompact() {
-        if (activeKey !== "top") return;
-        if (!homeCompact && window.scrollY > 20) setHomeCompact(true);
-      }
-
-      function showPanel(key) {
-        activeKey = key;
-        const all = key === "top";
-        const isMore = key === "more";
-        homeCompact = false;
-        mainEl.classList.remove("is-home-compact");
-        clearRevealStaggers();
-        navSections.forEach((item) => {
-          if (isMore) {
-            // Keep Home intro; hide other nav sections under more.
-            item.target.hidden = item.key !== "top";
-          } else if (all) {
-            item.target.hidden = false;
-          } else {
-            // Keep Home intro visible; show only the selected section below it.
-            item.target.hidden = item.key !== "top" && item.key !== key;
-          }
-        });
-        more.hidden = !isMore;
-        more.classList.toggle("is-current", isMore);
-        mainEl.classList.toggle("is-section-panel", !all);
-        setHeartOpen(isMore);
-        if (isMore) {
-          navSections.forEach((item) => {
-            item.link.classList.remove("is-current");
-            item.target.classList.remove("is-current");
-            item.link.removeAttribute("aria-current");
-          });
-          more.classList.remove("is-revealed");
-          revealStaggerTimers.push(
-            window.setTimeout(() => revealSection(more), reduceMotion ? 0 : 180)
-          );
-          playMore();
-        } else {
-          pauseMore();
-          if (all) {
-            resetReveals();
-            updateActiveNav();
-          } else {
-            revealVisiblePanels();
-            setCurrent(navSections.find((item) => item.key === key) || navSections[0]);
-          }
-        }
-        window.scrollTo(0, 0);
-        updateNight();
-      }
-
-      function panelFromHash() {
-        const key = (location.hash || "#top").slice(1);
-        if (key === "more") return "more";
-        return navSections.some((item) => item.key === key) ? key : "top";
-      }
-
-      document.querySelectorAll("nav a, a.name").forEach((link) => {
-        link.addEventListener("click", (event) => {
-          const href = link.getAttribute("href");
-          if (!href || href.charAt(0) !== "#") return;
-          event.preventDefault();
-          let key = href === "#top" ? "top" : href.slice(1);
-          if (key !== "top" && key === activeKey) key = "top";
-          const nextHash = key === "top" ? "#top" : "#" + key;
-          if (location.hash !== nextHash) history.pushState(null, "", nextHash);
-          showPanel(key);
-        });
-      });
-      heart.addEventListener("click", () => {
-        const next = activeKey === "more" ? "top" : "more";
-        const nextHash = next === "top" ? "#top" : "#more";
-        if (location.hash !== nextHash) history.pushState(null, "", nextHash);
-        showPanel(next);
-      });
-      window.addEventListener("popstate", () => showPanel(panelFromHash()));
-      const backTop = document.querySelector(".back-top");
-      function updateBackTop() {
         const show = window.scrollY > 280;
         backTop.classList.toggle("is-visible", show);
         backTop.setAttribute("aria-hidden", show ? "false" : "true");
         backTop.tabIndex = show ? 0 : -1;
       }
-      backTop.addEventListener("click", () => {
-        if (activeKey === "top" && homeCompact) {
-          homeCompact = false;
-          mainEl.classList.remove("is-home-compact");
-          clearRevealStaggers();
-          resetReveals();
-          updateActiveNav();
-        }
-        window.scrollTo({ top: 0, behavior: "smooth" });
-      });
 
-      window.addEventListener("scroll", () => {
-        updateHomeCompact();
-        updateNight();
-        updateActiveNav();
-        updateBackTop();
-      }, { passive: true });
-      window.addEventListener("resize", () => {
-        updateHomeCompact();
-        updateNight();
-        updateActiveNav();
-        updateBackTop();
+      function updateHeaderOffset() {
+        document.documentElement.style.setProperty("--header-height", header.offsetHeight + "px");
+        updateIntroSize();
+        updatePageScroll();
+      }
+
+      if ("ResizeObserver" in window) new ResizeObserver(updateHeaderOffset).observe(header);
+      window.addEventListener("resize", updateHeaderOffset);
+      window.addEventListener("scroll", updatePageScroll, { passive: true });
+      backTop.addEventListener("click", () => {
+        cancelMenuScroll();
+        window.scrollTo({ top: 0 });
       });
-      showPanel(panelFromHash());
-      updateBackTop();
+      if (showIntroOnLoad) showIntro();
+      updateHeaderOffset();
 
       const themeToggle = document.querySelector(".theme-toggle");
       function currentTheme() {
